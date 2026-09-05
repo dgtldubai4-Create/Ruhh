@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rose: #f7d6e0;
+  --color-rose-mid: #d4829e;
+  --color-rose-deep: #9b4b6b;
+  --color-sage: #d8edd8;
+  --color-sage-mid: #8cbf8c;
+  --color-sage-deep: #3d6b3d;
+  --color-lav: #eae0f5;
+  --color-lav-mid: #a98bd0;
+  --color-lav-deep: #5d3a8a;
+  --color-peach: #fdebd0;
+  --color-peach-mid: #e8a870;
+  --color-peach-deep: #8b5230;
+  --color-cream: #fbf7f2;
+  --color-cream2: #f5eee6;
+  --color-ink: #2c1a1a;
+  --color-muted: #7a5050;
+  --color-line: rgba(155, 75, 107, 0.13);
+  --color-danger: #b23a48;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --radius-card: 16px;
+  --radius-sm: 10px;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .btn-p {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-rose-deep px-5 py-2.5 text-[13px] text-white transition hover:opacity-90 hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0;
+  }
+  .btn-o {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-rose-deep bg-white px-5 py-2 text-[13px] text-rose-deep transition hover:bg-rose disabled:opacity-50;
+  }
+  .btn-wa {
+    @apply flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#25d366] px-4 py-3 text-[13px] font-bold text-white transition hover:brightness-95 disabled:opacity-60;
+  }
+  .card {
+    @apply rounded-[16px] border border-line bg-white;
+  }
+  .sec-head {
+    @apply mb-3.5 flex items-center gap-2.5 text-[13px] uppercase tracking-[1.5px] text-muted;
+  }
+  .sec-head::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--color-line);
+  }
+  .field {
+    @apply w-full rounded-[10px] border-[1.5px] border-line bg-white px-3 py-2.5 text-[13px] text-ink outline-none transition placeholder:text-muted/60 focus:border-rose-mid;
+  }
+  .field-err {
+    @apply border-danger;
+  }
+  .label {
+    @apply mb-1 block text-[11px] uppercase tracking-wider text-muted;
+  }
+  .tag {
+    @apply inline-block rounded-full px-2 py-0.5 text-[10px] font-bold;
+  }
+  .chip {
+    @apply rounded-full border-[1.5px] border-line bg-white px-3.5 py-1.5 text-[12px] text-ink transition hover:border-rose-mid;
+  }
+  .chip-sel {
+    @apply border-rose-deep bg-rose text-rose-deep font-bold;
+  }
+  .qbtn {
+    @apply flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white text-[14px] leading-none text-rose-deep hover:bg-rose disabled:opacity-40;
+  }
+  .admin-input {
+    @apply w-full rounded-[8px] border border-line bg-white px-2.5 py-2 text-[13px] outline-none focus:border-rose-mid;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rose-mid);
+  outline-offset: 2px;
+}
