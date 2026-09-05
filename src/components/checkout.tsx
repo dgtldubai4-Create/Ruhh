@@ -126,9 +126,13 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
   if (placed) {
     const o = placed.order;
     return (
-      <div className="rounded-[16px] border-[1.5px] border-sage-mid bg-sage/40 p-7 text-center">
-        <div className="mb-2 text-[40px]">🎉</div>
-        <h2 className="mb-1 text-[18px] font-bold">Order {o.ref} placed!</h2>
+      <div className="m-slide-up rounded-[16px] border-[1.5px] border-sage-mid bg-sage/40 p-7 text-center">
+        <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-sage-deep text-white shadow-[0_12px_24px_-12px_rgba(61,107,61,0.8)]">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            <path d="M5 12l5 5L20 7" className="check-draw" />
+          </svg>
+        </div>
+        <h2 className="m-fade-up m-delay-1 mb-1 text-[22px] font-bold">Order {o.ref} placed!</h2>
         <p className="mb-1 text-[13px] leading-[1.6] text-muted">
           {settings.owner_name} has your order for {fmtDate(o.slot_date)}, {o.slot_label}. WhatsApp should have opened with the details ready to send.
           If it didn&apos;t, tap the button below.
@@ -177,7 +181,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
       <h2 className="sec-head">Your cart</h2>
       <div className="mb-4">
         {cart.lines.map((l) => (
-          <div key={l.key} className="card mb-2 flex items-center gap-3 p-3">
+          <div key={l.key} className="card m-fade-up mb-2 flex items-center gap-3 p-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[10px] bg-cream2 text-[22px]">{l.emoji}</div>
             <div className="min-w-0 flex-1">
               <div className="text-[13px] font-bold">{l.name}</div>
@@ -313,7 +317,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
       <Toggle on={marketing} onChange={setMarketing} icon="✨" title="Weekly specials" sub={`${settings.owner_name} messages when something new is baking`} />
 
       {errors.form && <p className="mb-2 rounded-[10px] bg-danger/10 p-3 text-[12px] text-danger">{errors.form}</p>}
-      <button className="btn-wa mt-4" onClick={submit} disabled={submitting || Boolean(belowMin)}>
+      <button className="btn-wa press mt-4" onClick={submit} disabled={submitting || Boolean(belowMin)}>
         <WhatsAppIcon /> {submitting ? "Placing order…" : `Confirm & send to ${settings.owner_name} on WhatsApp`}
       </button>
       <p className="mt-2 text-center text-[11px] leading-[1.5] text-muted">

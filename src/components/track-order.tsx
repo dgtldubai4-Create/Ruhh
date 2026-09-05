@@ -97,7 +97,7 @@ export function TrackOrder({ settings }: { settings: Settings }) {
       </form>
 
       {order && (
-        <div className="mb-6">
+        <div key={order.id} className="m-fade-up mb-6">
           <div className="card mb-4 p-4">
             <div className="text-[11px] text-muted">Order {order.ref}</div>
             <div className="text-[14px] font-bold">
@@ -120,14 +120,20 @@ export function TrackOrder({ settings }: { settings: Settings }) {
           {order.status === "cancelled" ? (
             <div className="mb-4 rounded-[10px] bg-danger/10 p-3 text-[12px] text-danger">This order was cancelled. Message {settings.owner_name} if this is unexpected.</div>
           ) : (
-            <div className="mb-4 flex justify-between">
+            <div className="relative mb-4 flex justify-between">
+              <div aria-hidden className="absolute left-[10%] right-[10%] top-4 h-0.5 bg-line" />
+              <div
+                aria-hidden
+                className="absolute left-[10%] top-4 h-0.5 bg-sage-deep transition-[width] duration-700 ease-out"
+                style={{ width: `${Math.max(0, stepIdx) * 20}%` }}
+              />
               {steps.map((s, idx) => {
                 const done = idx < stepIdx;
                 const now = idx === stepIdx;
                 return (
-                  <div key={s} className="flex flex-1 flex-col items-center text-center">
+                  <div key={s} className="m-stagger relative flex flex-1 flex-col items-center text-center" style={{ "--i": idx } as React.CSSProperties}>
                     <div
-                      className={`mb-1 flex h-8 w-8 items-center justify-center rounded-full text-[12px] ${done ? "bg-sage-deep text-white" : now ? "bg-rose-deep text-white" : "border border-line bg-white text-muted"}`}
+                      className={`mb-1 flex h-8 w-8 items-center justify-center rounded-full text-[12px] transition-colors duration-500 ${done ? "bg-sage-deep text-white" : now ? "m-pulse bg-rose-deep text-white" : "border border-line bg-white text-muted"}`}
                     >
                       {done ? "✓" : idx + 1}
                     </div>

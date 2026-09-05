@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ItemPicker } from "@/components/item-picker";
+import { CartBar } from "@/components/cart-bar";
+import { Toast } from "@/components/toast";
+import { categoryArt } from "@/lib/category-art";
 import { useCart } from "@/components/cart-context";
 import { itemHasOptions, itemMinPrice, categoryLeadTime } from "@/lib/data";
 import { aed } from "@/lib/format";
@@ -10,12 +13,16 @@ import type { Category, MenuItem, Settings } from "@/lib/types";
 
 const TILE_BG = ["bg-rose", "bg-lav", "bg-sage", "bg-peach"];
 
+
 export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]; categories: Category[]; settings: Settings }) {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<string>("all");
   const [picking, setPicking] = useState<MenuItem | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const clearToast = useCallback(() => setToast(null), []);
   const { add } = useCart();
+  const catName = (id: string | null) => categories.find((c) => c.id === id)?.name;
 
   const usedCats = categories.filter((c) => items.some((i) => i.category_id === c.id));
 
@@ -52,6 +59,7 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
       leadTimeHours: categoryLeadTime(category, settings),
     });
     setFlash(m.id);
+    setToast(`${m.name} added`);
     setTimeout(() => setFlash(null), 900);
   }
 
@@ -79,7 +87,7 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
       {list.length === 0 ? (
         <div className="p-7 text-center text-[13px] text-muted">No treats found.</div>
       ) : (
-        <div className="mb-6 grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3">
+        <div key={`${cat}-${q}`} className="m-stagger mb-24 grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3">
           {list.map((m, i) => {
             const multi = m.item_sizes.length > 1;
             const flav = m.item_flavours.slice(0, 3).map((f) => f.name).join(" · ") + (m.item_flavours.length > 3 ? " …" : "");
@@ -90,14 +98,18 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
                 tabIndex={0}
                 onClick={() => choose(m)}
                 onKeyDown={(e) => e.key === "Enter" && choose(m)}
-                className="card flex cursor-pointer flex-col overflow-hidden transition hover:-translate-y-0.5 hover:border-rose-mid"
+                style={{ "--i": Math.min(i, 12) } as React.CSSProperties}
+                className="card lift group flex cursor-pointer flex-col overflow-hidden hover:border-rose-mid"
               >
-                <div className={`relative flex h-[100px] items-center justify-center text-[40px] ${TILE_BG[i % 4]}`}>
-                  {m.image_url ? (
-                    <Image src={m.image_url} alt={m.name} fill sizes="(max-width: 680px) 50vw, 220px" className="object-cover" unoptimized />
-                  ) : (
-                    m.emoji
-                  )}
+                <div className={`relative flex h-[110px] items-center justify-center overflow-hidden text-[40px] ${TILE_BG[i % 4]}`}>
+                  <Image
+                    src={m.image_url ?? categoryArt(catName(m.category_id))}
+                    alt={m.name}
+                    fill
+                    sizes="(max-width: 680px) 50vw, 220px"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    unoptimized
+                  />
                   {itemHasOptions(m) && (
                     <span className="absolute right-1.5 top-1.5 rounded-full bg-white/85 px-1.5 py-0.5 text-[9px] font-bold text-rose-deep">options</span>
                   )}
@@ -117,7 +129,7 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
                         e.stopPropagation();
                         choose(m);
                       }}
-                      className={`flex h-7 w-7 items-center justify-center rounded-full text-[16px] leading-none text-white transition ${flash === m.id ? "bg-sage text-sage-deep" : "bg-rose-deep"}`}
+                      className={`press flex h-7 w-7 items-center justify-center rounded-full text-[16px] leading-none text-white transition ${flash === m.id ? "m-pop bg-sage text-sage-deep" : "bg-rose-deep"}`}
                     >
                       {flash === m.id ? "✓" : "+"}
                     </button>
@@ -132,10 +144,14 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
       {picking && (
         <ItemPicker
           item={picking}
+          artUrl={categoryArt(catName(picking.category_id))}
           leadTimeHours={categoryLeadTime(categories.find((c) => c.id === picking.category_id), settings)}
           onClose={() => setPicking(null)}
+          onAdded={(name) => setToast(`${name} added`)}
         />
       )}
+      <Toast message={toast} onDone={clearToast} />
+      <CartBar />
     </>
   );
 }

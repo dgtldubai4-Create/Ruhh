@@ -17,7 +17,10 @@ export function CartPill() {
   return (
     <Link href="/order" className="flex shrink-0 items-center gap-1.5 rounded-full bg-rose-deep px-3.5 py-1.5 text-[12px] text-white" aria-label="View cart">
       Cart
-      <span className="flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-rose-deep">
+      <span
+        key={hydrated ? count : -1}
+        className={`flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-rose-deep ${hydrated && count > 0 ? "m-bump" : ""}`}
+      >
         {hydrated ? count : 0}
       </span>
     </Link>

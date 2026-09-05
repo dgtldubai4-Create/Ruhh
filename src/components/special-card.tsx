@@ -32,7 +32,7 @@ export function SpecialCard({ special: s, leadTimeHours }: { special: Special; l
   }
 
   return (
-    <div className={`mb-3.5 flex items-center gap-4 rounded-[16px] border-[1.5px] border-dashed bg-white p-4 ${a.border}`}>
+    <div className={`lift mb-3.5 flex items-center gap-4 rounded-[16px] border-[1.5px] border-dashed bg-white p-4 ${a.border}`}>
       <div className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-[12px] text-[30px] ${a.bg}`}>{s.emoji}</div>
       <div className="min-w-0 flex-1">
         <h3 className="mb-0.5 text-[14px] font-bold">
@@ -43,7 +43,7 @@ export function SpecialCard({ special: s, leadTimeHours }: { special: Special; l
         <div className="flex flex-wrap items-center gap-2">
           <span className={`text-[15px] font-bold ${a.text}`}>{aed(s.price_aed)}</span>
           {s.old_price_aed != null && <span className="text-[12px] text-muted line-through">{aed(s.old_price_aed)}</span>}
-          <button onClick={order} className={`btn-p ml-auto px-3.5 py-1.5 text-[11px] ${a.btn}`} disabled={s.price_aed <= 0}>
+          <button onClick={order} className={`btn-p press ml-auto px-3.5 py-1.5 text-[11px] ${a.btn}`} disabled={s.price_aed <= 0}>
             Order now
           </button>
         </div>
