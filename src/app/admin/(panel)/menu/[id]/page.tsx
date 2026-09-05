@@ -82,10 +82,7 @@ export default async function EditItemPage({ params, searchParams }: { params: P
             <input type="checkbox" name="is_available" defaultChecked={m.is_available} className="accent-rose-deep" /> Visible to customers
           </label>
 
-          <div className="mt-5 flex items-center justify-between">
-            <ConfirmButton action={deleteMenuItem} hidden={{ id: m.id }} message={`Delete "${m.name}"? This cannot be undone.`} className="text-[12px] text-danger hover:underline">
-              Delete item
-            </ConfirmButton>
+          <div className="mt-5 flex justify-end">
             <button className="btn-p px-5">Save changes</button>
           </div>
         </form>
@@ -107,6 +104,11 @@ export default async function EditItemPage({ params, searchParams }: { params: P
             </form>
           )}
           <p className="mt-2 text-[11px] text-muted">Square JPG or PNG under 4 MB looks best.</p>
+          <div className="mt-4 border-t border-line pt-3">
+            <ConfirmButton action={deleteMenuItem} hidden={{ id: m.id }} message={`Delete "${m.name}"? This cannot be undone.`} className="text-[12px] text-danger hover:underline">
+              Delete this item
+            </ConfirmButton>
+          </div>
         </div>
       </div>
     </>
