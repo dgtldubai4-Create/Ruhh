@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useCart } from "@/components/cart-context";
 import { WhatsAppIcon } from "@/components/icons";
+import { Confetti } from "@/components/confetti";
 import { availableDates } from "@/lib/availability";
 import { aed, fmtDate, isValidPhone } from "@/lib/format";
 import type { CartLine, DeliveryZone, Order, Settings } from "@/lib/types";
@@ -127,6 +128,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
     const o = placed.order;
     return (
       <div className="m-slide-up rounded-[16px] border-[1.5px] border-sage-mid bg-sage/40 p-7 text-center">
+        <Confetti />
         <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-sage-deep text-white shadow-[0_12px_24px_-12px_rgba(61,107,61,0.8)]">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M5 12l5 5L20 7" className="check-draw" />

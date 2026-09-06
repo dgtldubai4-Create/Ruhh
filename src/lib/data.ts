@@ -13,6 +13,8 @@ const DEFAULT_SETTINGS: Settings = {
   instagram_handle: null,
   pickup_address: null,
   logo_url: null,
+  hero_image_url: null,
+  about_image_url: null,
   bank_details: null,
   closed_weekdays: [],
   closed_dates: [],
@@ -113,6 +115,17 @@ export function itemMinPrice(m: MenuItem) {
 
 export function itemHasOptions(m: MenuItem) {
   return m.item_flavours.length > 0 || m.item_sizes.length > 1;
+}
+
+export function getFeatured(items: MenuItem[], n = 4): MenuItem[] {
+  const featured = items.filter((m) => m.is_featured);
+  const withPhoto = items.filter((m) => !m.is_featured && m.image_url);
+  return [...featured, ...withPhoto].slice(0, n);
+}
+
+/** One representative image per category (first item with a photo). */
+export function categoryCover(items: MenuItem[], categoryId: string): string | null {
+  return items.find((m) => m.category_id === categoryId && m.image_url)?.image_url ?? null;
 }
 
 export function categoryLeadTime(cat: Category | undefined, settings: Settings) {

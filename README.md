@@ -45,6 +45,7 @@ integration for automated status messages.
    region close to Dubai (e.g. Mumbai or Frankfurt).
 2. Open **SQL Editor** and run, in order:
    - `supabase/migrations/0001_init.sql`
+   - `supabase/migrations/0002_photos_featured.sql`
    - `supabase/seed.sql` — **first edit the last statement** to Shweta's real
      email (the first admin), and optionally the WhatsApp number / Instagram /
      pickup address in the first `update settings` block.
@@ -55,6 +56,11 @@ integration for automated status messages.
    `{{ .ConfirmationURL }}` (default). Email sign-in must be enabled (default).
 5. **Project settings → API**: copy the *Project URL*, *anon public* key and
    *service_role* key for the next step.
+
+The seed also sets a launch photo on every menu item, the two specials, the
+home hero and the about section. These are AI-generated placeholders hosted by
+Porter Metrics; replace any of them with real photography from **Admin → Menu**
+and **Admin → Settings** as it becomes available.
 
 The migration creates all tables, the `media` storage bucket, and row-level
 security so the public key can only read storefront data. All writes go

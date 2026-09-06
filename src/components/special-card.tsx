@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/components/cart-context";
 import { aed } from "@/lib/format";
@@ -33,7 +34,9 @@ export function SpecialCard({ special: s, leadTimeHours }: { special: Special; l
 
   return (
     <div className={`lift mb-3.5 flex items-center gap-4 rounded-[16px] border-[1.5px] border-dashed bg-white p-4 ${a.border}`}>
-      <div className={`flex h-[60px] w-[60px] shrink-0 items-center justify-center rounded-[12px] text-[30px] ${a.bg}`}>{s.emoji}</div>
+      <div className={`relative flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[12px] text-[30px] ${a.bg}`}>
+        {s.image_url ? <Image src={s.image_url} alt={s.name} fill sizes="72px" className="object-cover" unoptimized /> : s.emoji}
+      </div>
       <div className="min-w-0 flex-1">
         <h3 className="mb-0.5 text-[14px] font-bold">
           {s.name}

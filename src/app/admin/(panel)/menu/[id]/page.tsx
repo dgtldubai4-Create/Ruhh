@@ -78,9 +78,14 @@ export default async function EditItemPage({ params, searchParams }: { params: P
             <SizeRows initial={sizes.map((s) => ({ id: s.id, label: s.label, piece_count: s.piece_count, price_aed: Number(s.price_aed) }))} />
           </div>
 
-          <label className="mt-4 flex items-center gap-2 text-[13px]">
-            <input type="checkbox" name="is_available" defaultChecked={m.is_available} className="accent-rose-deep" /> Visible to customers
-          </label>
+          <div className="mt-4 flex flex-wrap gap-4 text-[13px]">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" name="is_available" defaultChecked={m.is_available} className="accent-rose-deep" /> Visible to customers
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" name="is_featured" defaultChecked={m.is_featured} className="accent-rose-deep" /> Feature on home page
+            </label>
+          </div>
 
           <div className="mt-5 flex justify-end">
             <button className="btn-p px-5">Save changes</button>

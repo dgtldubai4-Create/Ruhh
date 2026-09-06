@@ -2,7 +2,7 @@ import Image from "next/image";
 import { adminClient } from "@/lib/supabase/admin";
 import { normalizeSettings } from "@/lib/data";
 import { isWhatsAppApiConfigured } from "@/lib/env";
-import { removeLogo, saveSettings, uploadLogo } from "@/app/admin/actions";
+import { removeLogo, removeSettingImage, saveSettings, uploadLogo, uploadSettingImage } from "@/app/admin/actions";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -130,6 +130,32 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
             </form>
           )}
           <p className="mt-2 text-[11px] text-muted">Square PNG with transparent background looks best. Replaces the heart icon in the header.</p>
+
+          {(
+            [
+              ["hero_image_url", "Home page hero photo", s.hero_image_url, "Wide landscape photo of your bakes. Shown behind the headline on the home page."],
+              ["about_image_url", "About photo", s.about_image_url, "A photo of you or your kitchen for the “Say hello” section."],
+            ] as const
+          ).map(([field, label, url, hint]) => (
+            <div key={field} className="mt-5 border-t border-line pt-4">
+              <div className="label">{label}</div>
+              <div className="relative mb-2 h-[110px] overflow-hidden rounded-[10px] bg-cream2">
+                {url ? <Image src={url} alt="" fill sizes="260px" className="object-cover" unoptimized /> : <div className="flex h-full items-center justify-center text-[12px] text-muted">No photo</div>}
+              </div>
+              <form action={uploadSettingImage} className="grid gap-2">
+                <input type="hidden" name="field" value={field} />
+                <input type="file" name="image" accept="image/*" required className="text-[12px]" />
+                <button className="btn-o py-1.5 text-[12px]">Upload</button>
+              </form>
+              {url && (
+                <form action={removeSettingImage} className="mt-1">
+                  <input type="hidden" name="field" value={field} />
+                  <button className="w-full text-[12px] text-muted hover:text-danger">Remove</button>
+                </form>
+              )}
+              <p className="mt-1 text-[11px] text-muted">{hint}</p>
+            </div>
+          ))}
         </div>
       </div>
     </>

@@ -123,6 +123,7 @@ export async function saveMenuItem(fd: FormData) {
       category_id: str(fd, "category_id") || null,
       mixable: bool(fd, "mixable"),
       is_available: bool(fd, "is_available"),
+      is_featured: bool(fd, "is_featured"),
       sort_order: num(fd, "sort_order"),
     })
     .eq("id", id);
@@ -209,6 +210,25 @@ export async function uploadLogo(fd: FormData) {
   if (!(file instanceof File) || file.size === 0) return;
   const url = await uploadToStorage(file, "brand");
   await adminClient().from("settings").update({ logo_url: url }).eq("id", 1);
+  revalidateStore();
+}
+
+export async function uploadSettingImage(fd: FormData) {
+  await requireAdmin();
+  const field = str(fd, "field");
+  if (field !== "hero_image_url" && field !== "about_image_url") return;
+  const file = fd.get("image");
+  if (!(file instanceof File) || file.size === 0) return;
+  const url = await uploadToStorage(file, "brand");
+  await adminClient().from("settings").update({ [field]: url }).eq("id", 1);
+  revalidateStore();
+}
+
+export async function removeSettingImage(fd: FormData) {
+  await requireAdmin();
+  const field = str(fd, "field");
+  if (field !== "hero_image_url" && field !== "about_image_url") return;
+  await adminClient().from("settings").update({ [field]: null }).eq("id", 1);
   revalidateStore();
 }
 

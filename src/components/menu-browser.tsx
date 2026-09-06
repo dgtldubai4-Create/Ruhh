@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ItemPicker } from "@/components/item-picker";
 import { CartBar } from "@/components/cart-bar";
@@ -15,8 +16,10 @@ const TILE_BG = ["bg-rose", "bg-lav", "bg-sage", "bg-peach"];
 
 
 export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]; categories: Category[]; settings: Settings }) {
+  const params = useSearchParams();
+  const initialCat = params.get("cat");
   const [q, setQ] = useState("");
-  const [cat, setCat] = useState<string>("all");
+  const [cat, setCat] = useState<string>(initialCat && categories.some((c) => c.id === initialCat) ? initialCat : "all");
   const [picking, setPicking] = useState<MenuItem | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);

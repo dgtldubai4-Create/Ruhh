@@ -23,6 +23,8 @@ export interface Settings {
   instagram_handle: string | null;
   pickup_address: string | null;
   logo_url: string | null;
+  hero_image_url: string | null;
+  about_image_url: string | null;
   bank_details: string | null;
   closed_weekdays: number[];
   closed_dates: string[];
@@ -67,6 +69,7 @@ export interface MenuItem {
   image_url: string | null;
   mixable: boolean;
   is_available: boolean;
+  is_featured: boolean;
   sort_order: number;
   item_sizes: ItemSize[];
   item_flavours: ItemFlavour[];
@@ -81,6 +84,7 @@ export interface Special {
   old_price_aed: number | null;
   tag: string | null;
   accent: Accent;
+  image_url: string | null;
   is_active: boolean;
   sort_order: number;
 }
