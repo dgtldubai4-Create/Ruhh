@@ -67,10 +67,8 @@ export function Stat({ label, value, accent = "grass", small }: { label: string;
   return (
     <div className={cx("rounded-card border border-line bg-card", small ? "px-4 py-3" : "px-5 py-4")}>
       <div className={cx("font-display font-bold tabular", small ? "text-[24px]" : "text-[32px]", "leading-none")}>{value}</div>
-      <div className="mt-1.5 flex items-center gap-1.5 text-[13px] text-stone">
-        <span className={cx("h-2 w-2 rounded-full", ACCENT[accent].bg)} aria-hidden />
-        {label}
-      </div>
+      <div className="mt-1.5 text-[13px] text-stone">{label}</div>
+      <span className={cx("mt-3 block h-1 w-8 rounded-pill", ACCENT[accent].bg)} aria-hidden />
     </div>
   );
 }

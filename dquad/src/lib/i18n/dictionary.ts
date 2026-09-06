@@ -65,7 +65,7 @@ const en = {
   stages: { draft: "Draft", inviting: "Inviting", active: "Active", review: "Content review", publishing: "Publishing", completed: "Completed" },
   logistics: { address_confirmed: "Address confirmed", preparing: "Preparing", dispatched: "Dispatched", out_for_delivery: "Out for delivery", delivered: "Delivered" },
   admin: {
-    overview: "Overview", campaigns: "Campaigns", creators: "Creators", review: "Review queue", logistics: "Logistics", loyalty: "Loyalty", products: "Product library", role: "Role", permissions: "What this role can do",
+    overview: "Overview", campaigns: "Campaigns", creators: "Creators", review: "Review", logistics: "Logistics", loyalty: "Loyalty", products: "Products", role: "Role", permissions: "What this role can do",
   },
 };
 
@@ -136,7 +136,7 @@ const ar: Dict = {
   stages: { draft: "مسودة", inviting: "دعوات", active: "نشطة", review: "مراجعة المحتوى", publishing: "النشر", completed: "مكتملة" },
   logistics: { address_confirmed: "تم تأكيد العنوان", preparing: "قيد التجهيز", dispatched: "تم الشحن", out_for_delivery: "في الطريق", delivered: "تم التسليم" },
   admin: {
-    overview: "نظرة عامة", campaigns: "الحملات", creators: "المبدعون", review: "قائمة المراجعة", logistics: "اللوجستيات", loyalty: "الولاء", products: "مكتبة المنتجات", role: "الدور", permissions: "ما يمكن لهذا الدور فعله",
+    overview: "نظرة عامة", campaigns: "الحملات", creators: "المبدعون", review: "المراجعة", logistics: "اللوجستيات", loyalty: "الولاء", products: "المنتجات", role: "الدور", permissions: "ما يمكن لهذا الدور فعله",
   },
 };
 

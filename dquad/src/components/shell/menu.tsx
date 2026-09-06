@@ -28,7 +28,7 @@ export function RoleMenu({ mode }: { mode: "creator" | "admin" }) {
     <>
       <button className="inline-flex h-10 items-center gap-2 rounded-pill border border-line bg-card ps-1 pe-3 text-[13.5px] font-semibold hover:bg-paper-2" onClick={() => setOpen(true)} aria-label="Menu">
         {mode === "creator" && creator ? <Avatar initials={creator.avatar.initials} tone={creator.avatar.tone} size={32} /> : <DotsThreeCircle size={30} weight="fill" className="text-ink" />}
-        <span className="hidden sm:inline">{mode === "creator" ? creator?.name.split(" ")[0] : ROLE_LABELS[s.session.adminRole]}</span>
+        <span className="hidden whitespace-nowrap sm:inline">{mode === "creator" ? creator?.name.split(" ")[0] : ROLE_LABELS[s.session.adminRole]}</span>
       </button>
 
       <Drawer open={open} onClose={() => setOpen(false)} title={mode === "creator" ? creator?.name : t.admin.role}>

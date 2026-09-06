@@ -39,18 +39,18 @@ export function PortalShell({ mode, items, children, accent = "grass" }: { mode:
           <Link href={`/${mode}`} className="flex items-center gap-2 rounded-pill ps-2 pe-3 py-1.5 font-display text-[16px] font-bold">
             <span className={cx("inline-block h-6 w-6 rounded-[100%_0_100%_0]", accent === "grass" ? "bg-grass" : "bg-ink")} aria-hidden />
             <span className="hidden sm:inline">{t.brand}</span>
-            <span className="hidden text-[12px] font-semibold text-stone md:inline">{mode === "creator" ? t.nav.creatorView : t.nav.brandView}</span>
+            <span className="hidden whitespace-nowrap text-[12px] font-semibold text-stone xl:inline">{mode === "creator" ? t.nav.creatorView : t.nav.brandView}</span>
           </Link>
           <nav className="hidden items-center gap-0.5 md:flex" aria-label="Portal">
             {items.map((it) => (
-              <Link key={it.href} href={it.href} className={cx("pill-link inline-flex items-center gap-1.5", isActive(it.href) && "pill-link-active")} aria-current={isActive(it.href) ? "page" : undefined}>
+              <Link key={it.href} href={it.href} className={cx("pill-link inline-flex items-center gap-1.5 whitespace-nowrap", isActive(it.href) && "pill-link-active")} aria-current={isActive(it.href) ? "page" : undefined}>
                 <it.icon size={17} weight={isActive(it.href) ? "fill" : "regular"} />
                 {it.label}
               </Link>
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <SimTag>{t.common.simulated}</SimTag>
+            <span className="hidden lg:inline"><SimTag>{t.common.simulated}</SimTag></span>
             <InboxButton audience={mode} />
             <RoleMenu mode={mode} />
           </div>
