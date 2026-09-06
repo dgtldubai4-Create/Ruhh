@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { Drawer, useToast } from "@/components/ui/overlays";
 import { Field } from "@/components/ui/primitives";
 import { useAppState } from "@/lib/store/hooks";
@@ -45,6 +45,15 @@ function fromCampaign(c?: Campaign): Draft {
 
 /** Drawer form for a new campaign or edits to an existing one. Validates before it touches the store. */
 export function CampaignForm({ open, onClose, campaign, onSaved }: { open: boolean; onClose: () => void; campaign?: Campaign; onSaved?: (id: string) => void }) {
+  return (
+    <Drawer open={open} onClose={onClose} title={campaign ? `Edit ${campaign.title}` : "New campaign"} width={520}>
+      {/* The Drawer mounts its children only while open, so the body starts clean every time. */}
+      <CampaignFormBody campaign={campaign} onClose={onClose} onSaved={onSaved} />
+    </Drawer>
+  );
+}
+
+function CampaignFormBody({ campaign, onClose, onSaved }: { campaign?: Campaign; onClose: () => void; onSaved?: (id: string) => void }) {
   const s = useAppState();
   const { t } = useLang();
   const { actor } = useActor();
@@ -53,13 +62,6 @@ export function CampaignForm({ open, onClose, campaign, onSaved }: { open: boole
   const [d, setD] = useState<Draft>(() => fromCampaign(campaign));
   const [errors, setErrors] = useState<Errors>({});
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    if (open) {
-      setD(fromCampaign(campaign));
-      setErrors({});
-    }
-  }, [open, campaign]);
 
   const set = <K extends keyof Draft>(k: K, v: Draft[K]) => setD((x) => ({ ...x, [k]: v }));
   const products = s.products.filter((p) => p.brandId === d.brandId);
@@ -106,23 +108,8 @@ export function CampaignForm({ open, onClose, campaign, onSaved }: { open: boole
     onClose();
   }
 
-  const formId = `${uid}-form`;
   return (
-    <Drawer
-      open={open}
-      onClose={onClose}
-      title={campaign ? `Edit ${campaign.title}` : "New campaign"}
-      width={520}
-      footer={
-        <div className="flex justify-end gap-2">
-          <button type="button" className="btn-ghost" onClick={onClose} disabled={busy}>{t.common.cancel}</button>
-          <button type="submit" form={formId} className="btn-grass" disabled={busy} aria-busy={busy}>
-            {busy ? "Saving" : campaign ? t.common.save : "Create draft"}
-          </button>
-        </div>
-      }
-    >
-      <form id={formId} onSubmit={submit} noValidate className="flex flex-col gap-4">
+    <form onSubmit={submit} noValidate className="flex flex-col gap-4">
         <Field label="Title" error={errors.title} htmlFor={`${uid}-title`}>
           <input id={`${uid}-title`} className={cx("field", errors.title && "field-error")} value={d.title} onChange={(e) => set("title", e.target.value)} placeholder="Amla Strong Roots Challenge" />
         </Field>
@@ -199,7 +186,12 @@ export function CampaignForm({ open, onClose, campaign, onSaved }: { open: boole
             <input id={`${uid}-points`} type="number" min={50} step={50} inputMode="numeric" className={cx("field tabular", errors.points && "field-error")} value={d.points} onChange={(e) => set("points", e.target.value)} placeholder="900" />
           </Field>
         </div>
-      </form>
-    </Drawer>
+        <div className="sticky bottom-0 -mx-5 -mb-4 flex justify-end gap-2 border-t border-line bg-paper px-5 py-4">
+          <button type="button" className="btn-ghost" onClick={onClose} disabled={busy}>{t.common.cancel}</button>
+          <button type="submit" className="btn-grass" disabled={busy} aria-busy={busy}>
+            {busy ? "Saving" : campaign ? t.common.save : "Create draft"}
+          </button>
+        </div>
+    </form>
   );
 }

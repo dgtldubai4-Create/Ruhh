@@ -53,14 +53,15 @@ export default function LogisticsPage() {
       <LayoutGroup>
         {groups.map((g, i) => (
           <section key={g.status} id={`parcels-${g.status}`} aria-labelledby={`parcels-${g.status}-title`} className="scroll-mt-24">
-            <SectionTitle id={`parcels-${g.status}-title`} eyebrow={`${i + 1} of ${LOGISTICS_ORDER.length}`} title={t.logistics[g.status]} count={g.items.length} />
+            <SectionTitle id={`parcels-${g.status}-title`} title={<span><span className="me-2 text-stone tabular">{i + 1}.</span>{t.logistics[g.status]}</span>} count={g.items.length} />
             {g.items.length === 0 ? (
               <div className="rounded-card border border-dashed border-line px-4 py-5 text-center text-[13.5px] text-stone">{t.common.empty}</div>
             ) : (
-              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 <AnimatePresence initial={false}>
                   {g.items.map((sh) => (
-                    <ParcelCard key={sh.id} s={s} sh={sh} />
+                    // A lone parcel stretches across the row so a group never sits mostly empty.
+                    <ParcelCard key={sh.id} s={s} sh={sh} className={g.items.length === 1 ? "md:col-span-2 xl:col-span-3" : undefined} />
                   ))}
                 </AnimatePresence>
               </div>

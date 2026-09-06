@@ -12,20 +12,20 @@ import { Stagger, StaggerItem } from "@/components/motion";
 import { brandOf, effectiveDeadline, invitationSummary, packLabel, STAGE_ACCENT } from "./helpers";
 
 /**
- * Six stage columns on wide screens, three on tablets, one grouped list on phones.
- * Same markup at every width; the grid decides the shape.
+ * Six stage columns of at least 240px inside a horizontal rail from md up,
+ * one grouped list under md. Same markup at every width; the grid decides the shape.
  */
 export function StageBoard({ s, campaigns }: { s: AppState; campaigns: Campaign[] }) {
   const { t } = useLang();
   return (
-    <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
+    <div className="rail -mx-5 overflow-x-auto px-5 sm:-mx-8 sm:px-8 md:pb-2">
+      <div className="grid gap-4 md:grid-flow-col md:auto-cols-[minmax(240px,1fr)]">
       {STAGES.map((stage) => {
         const list = campaigns.filter((c) => c.stage === stage);
         return (
           <section key={stage} aria-labelledby={`stage-${stage}`} className="min-w-0">
-            <div className="mb-2 flex items-center gap-2 px-1">
-              <span className={cx("h-2.5 w-2.5 rounded-full", ACCENT[STAGE_ACCENT[stage]].bg)} aria-hidden />
-              <h2 id={`stage-${stage}`} className="text-[13px] font-bold uppercase tracking-[0.12em] text-ink">{t.stages[stage]}</h2>
+            <div className="mb-2 flex items-baseline gap-2 px-1">
+              <h2 id={`stage-${stage}`} className="font-display text-[15px] font-bold text-ink">{t.stages[stage]}</h2>
               <span className="ms-auto text-[12px] font-semibold tabular text-stone">{list.length}</span>
             </div>
             {list.length === 0 ? (
@@ -42,6 +42,7 @@ export function StageBoard({ s, campaigns }: { s: AppState; campaigns: Campaign[
           </section>
         );
       })}
+      </div>
     </div>
   );
 }

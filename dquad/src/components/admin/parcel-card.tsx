@@ -13,7 +13,7 @@ import { RoleNotice, useActor } from "./role-gate";
 import { Portrait } from "./creator-row";
 import { creatorOf, LOGISTICS_ORDER } from "./helpers";
 
-export function ParcelCard({ s, sh }: { s: AppState; sh: Shipment }) {
+export function ParcelCard({ s, sh, className }: { s: AppState; sh: Shipment; className?: string }) {
   const { t, lang, dir } = useLang();
   const { actor, allowed } = useActor();
   const { toast } = useToast();
@@ -33,7 +33,7 @@ export function ParcelCard({ s, sh }: { s: AppState; sh: Shipment }) {
   }
 
   return (
-    <motion.article layoutId={sh.id} layout="position" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }} className={cx("card flex flex-col gap-4 p-4 sm:p-5", sh.status === "delivered" && "bg-paper")} aria-label={sh.label}>
+    <motion.article layoutId={sh.id} layout="position" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }} className={cx("card flex flex-col gap-4 p-4 sm:p-5", sh.status === "delivered" && "bg-paper", className)} aria-label={sh.label}>
       <div className="flex items-start gap-3">
         <span className={cx("flex h-11 w-11 shrink-0 items-center justify-center rounded-input", isKit ? "bg-grass-soft" : "bg-sun-soft")} aria-hidden>
           {isKit ? <Package size={22} weight="fill" className="text-ink" /> : <Gift size={22} weight="fill" className="text-ink" />}
@@ -59,7 +59,7 @@ export function ParcelCard({ s, sh }: { s: AppState; sh: Shipment }) {
         </div>
       </div>
 
-      <dl className="grid gap-x-4 gap-y-2 text-[13.5px] sm:grid-cols-2">
+      <dl className="grid gap-x-4 gap-y-2 text-[13.5px] sm:grid-cols-2 xl:grid-cols-3">
         <div className="flex items-start gap-2">
           <MapPin size={16} weight="bold" className="mt-0.5 shrink-0 text-stone" aria-hidden />
           <div><dt className="sr-only">Address</dt><dd>{sh.address || "No address on file"}</dd></div>
@@ -68,7 +68,7 @@ export function ParcelCard({ s, sh }: { s: AppState; sh: Shipment }) {
           <Truck size={16} weight="bold" className="mt-0.5 shrink-0 text-stone" aria-hidden />
           <div><dt className="sr-only">Courier</dt><dd>{sh.courier}</dd></div>
         </div>
-        <div className="flex items-start gap-2 sm:col-span-2">
+        <div className="flex items-start gap-2 sm:col-span-2 xl:col-span-1">
           <Barcode size={16} weight="bold" className="mt-0.5 shrink-0 text-stone" aria-hidden />
           <div className="flex flex-wrap items-center gap-2"><dt className="sr-only">Tracking</dt><dd className="font-mono">{sh.tracking}</dd><SimTag>{t.common.simulated}</SimTag></div>
         </div>

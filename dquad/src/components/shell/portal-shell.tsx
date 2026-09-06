@@ -36,7 +36,7 @@ export function PortalShell({ mode, items, children, accent = "grass" }: { mode:
     <div className="min-h-dvh pb-24 md:pb-10">
       <header className="sticky top-0 z-40 flex justify-center px-3 pt-3 sm:px-5">
         <div className="pill-nav w-full max-w-[1280px] justify-between bg-card">
-          <Link href={`/${mode}`} className="flex items-center gap-2 rounded-pill ps-2 pe-3 py-1.5 font-display text-[16px] font-bold">
+          <Link href={`/${mode}`} className="flex shrink-0 items-center gap-2 whitespace-nowrap rounded-pill ps-2 pe-3 py-1.5 font-display text-[16px] font-bold">
             <span className={cx("inline-block h-6 w-6 rounded-[100%_0_100%_0]", accent === "grass" ? "bg-grass" : "bg-ink")} aria-hidden />
             <span className="hidden sm:inline">{t.brand}</span>
             <span className="hidden whitespace-nowrap text-[12px] font-semibold text-stone xl:inline">{mode === "creator" ? t.nav.creatorView : t.nav.brandView}</span>

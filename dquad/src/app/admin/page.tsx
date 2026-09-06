@@ -9,13 +9,12 @@ import type { Capability } from "@/lib/store/permissions";
 import { useLang } from "@/lib/i18n/provider";
 import { cx, daysUntil, fmtDateTime, fmtPoints, timeAgo } from "@/lib/format";
 import { Notice, SimTag, Stat, Tag, EmptyState } from "@/components/ui/primitives";
-import { ACCENT } from "@/components/ui/accent";
 import { Art, PaperScene } from "@/components/art/scenes";
 import { Counter, Reveal, Stagger, StaggerItem } from "@/components/motion";
 import { PageSkeleton, SectionTitle } from "@/components/admin/section";
 import { Collapse } from "@/components/admin/expand-row";
 import { useActor } from "@/components/admin/role-gate";
-import { creatorOf, effectiveDeadline, plural, ROLE_BLURB, STAGE_ACCENT } from "@/components/admin/helpers";
+import { creatorOf, effectiveDeadline, plural, ROLE_BLURB } from "@/components/admin/helpers";
 import { Portrait } from "@/components/admin/creator-row";
 
 type QueueItem = { id: string; cap: Capability; priority: number; icon: Icon; title: string; body: string; href: string };
@@ -115,7 +114,7 @@ export default function AdminOverview() {
 
       {/* KPIs */}
       <section aria-labelledby="kpi-title">
-        <SectionTitle id="kpi-title" title="This week in numbers" eyebrow="Pulse" />
+        <SectionTitle id="kpi-title" title="This week in numbers" />
         <Stagger className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
           {[
             { label: "Live campaigns", value: kpi.live, accent: "grass" as const },
@@ -134,7 +133,6 @@ export default function AdminOverview() {
         <div className="mt-3 flex flex-wrap gap-2">
           {STAGES.map((st) => (
             <Link key={st} href="/admin/campaigns" className="inline-flex items-center gap-1.5 rounded-pill border border-line bg-card px-3 py-1.5 text-[13px] hover:bg-paper-2">
-              <span className={cx("h-2 w-2 rounded-full", ACCENT[STAGE_ACCENT[st]].bg)} aria-hidden />
               {t.stages[st]} <span className="font-semibold tabular">{kpi.byStage[st]}</span>
             </Link>
           ))}
@@ -144,7 +142,7 @@ export default function AdminOverview() {
       <div className="grid gap-8 lg:grid-cols-12">
         {/* Needs you */}
         <section className="lg:col-span-7" aria-labelledby="queue-title">
-          <SectionTitle id="queue-title" title="Needs you" count={queue.length} eyebrow="Queue" />
+          <SectionTitle id="queue-title" title="Needs you" count={queue.length} />
           {queue.length === 0 ? (
             <EmptyState title="Nothing waiting on this role" body={`${roleLabel} has an empty queue. Switch role from the menu to see what others are holding.`} />
           ) : (
@@ -195,7 +193,7 @@ export default function AdminOverview() {
                   <Link href={n.href ?? "/admin"} className={cx("card block px-4 py-3 hover:bg-paper-2", !n.read && "border-ink")}>
                     <div className="flex items-center gap-2 text-[11.5px] font-semibold uppercase tracking-wide text-stone">
                       {n.channel === "email" ? t.common.email : t.common.inApp}
-                      {!n.read && <span className="h-1.5 w-1.5 rounded-full bg-ink" aria-label="Unread" />}
+                      {!n.read && <span className="text-ink">New</span>}
                       <span className="ms-auto normal-case tracking-normal">{timeAgo(n.at)}</span>
                     </div>
                     <div className={cx("mt-1 text-[14.5px]", !n.read && "font-semibold")}>{n.title}</div>
@@ -211,7 +209,7 @@ export default function AdminOverview() {
 
       {/* Activity */}
       <section aria-labelledby="feed-title">
-        <SectionTitle id="feed-title" title="What happened" count={feed.length} eyebrow="Activity" />
+        <SectionTitle id="feed-title" title="What happened" count={feed.length} />
         <ol className="card divide-y divide-line">
           {feedShown.map((a) => {
             const creator = s.creators.find((c) => c.name === a.actor);

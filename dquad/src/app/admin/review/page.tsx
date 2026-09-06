@@ -49,7 +49,7 @@ function ReviewInner() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader title={t.admin.review} lede={waiting ? `${waiting} ${waiting === 1 ? "cut is" : "cuts are"} waiting for a human read. Scores are a simulated first pass, your notes are the real feedback.` : "Nothing is waiting. New uploads land here with a simulated score."}>
+      <PageHeader title="Review queue" lede={waiting ? `${waiting} ${waiting === 1 ? "cut is" : "cuts are"} waiting for a human read. Scores are a simulated first pass, your notes are the real feedback.` : "Nothing is waiting. New uploads land here with a simulated score."}>
         <RoleLine caps={["review.decide"]} className="mt-3" />
       </PageHeader>
       <RoleNotice cap="review.decide" />

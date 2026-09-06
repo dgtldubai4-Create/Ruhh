@@ -84,7 +84,7 @@ export default function CreatorHome() {
       <section className="grid items-stretch gap-5 lg:grid-cols-12" aria-label="Welcome">
         <Reveal className="flex flex-col justify-between gap-6 lg:col-span-7" y={16} amount={0.05}>
           <div>
-            <p className="eyebrow mb-2">{fmtDate(new Date().toISOString(), lang)}, {creator.city}</p>
+            <p className="eyebrow mb-2">{hydrated ? `${fmtDate(new Date().toISOString(), lang)}, ` : ""}{creator.city}</p>
             <h1 className="display-lg text-balance">
               {greeting}, {firstName}.
             </h1>

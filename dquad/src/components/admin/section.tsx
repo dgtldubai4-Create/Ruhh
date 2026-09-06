@@ -2,11 +2,10 @@
 import { cx } from "@/lib/format";
 import { Skeleton } from "@/components/ui/primitives";
 
-export function SectionTitle({ title, count, aside, className, id, eyebrow }: { title: React.ReactNode; count?: number; aside?: React.ReactNode; className?: string; id?: string; eyebrow?: string }) {
+export function SectionTitle({ title, count, aside, className, id }: { title: React.ReactNode; count?: number; aside?: React.ReactNode; className?: string; id?: string }) {
   return (
     <div className={cx("mb-3 flex flex-wrap items-end justify-between gap-2", className)}>
       <div>
-        {eyebrow && <div className="eyebrow mb-1">{eyebrow}</div>}
         <h2 id={id} className="display-sm flex items-center gap-2">
           {title}
           {typeof count === "number" && <span className="rounded-pill bg-paper-2 px-2 py-0.5 text-[12px] font-semibold tabular text-stone">{count}</span>}
