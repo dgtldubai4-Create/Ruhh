@@ -20,6 +20,8 @@ const DEFAULT_SETTINGS: Settings = {
   closed_dates: [],
   slots: ["10 AM – 12 PM", "12 PM – 2 PM", "2 PM – 4 PM", "4 PM – 6 PM", "6 PM – 8 PM"],
   daily_order_cap: null,
+  slot_capacity: null,
+  tax_note: null,
   default_lead_time_hours: 24,
   free_delivery_over: null,
   accept_cash: true,

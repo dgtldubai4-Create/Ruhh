@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Photo } from "@/components/photo";
 import Link from "next/link";
 import { adminClient } from "@/lib/supabase/admin";
 import { ITEM_SELECT } from "@/lib/data";
@@ -35,7 +35,7 @@ export default async function AdminMenuPage() {
               return (
                 <div key={m.id} className={`card flex items-center gap-3 p-3 ${m.is_available ? "" : "opacity-60"}`}>
                   <div className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-cream2 text-[22px]">
-                    {m.image_url ? <Image src={m.image_url} alt="" fill sizes="48px" className="object-cover" unoptimized /> : m.emoji}
+                    {m.image_url ? <Photo src={m.image_url} alt="" fill sizes="48px" className="object-cover" /> : m.emoji}
                   </div>
                   <div className="min-w-0 flex-1">
                     <Link href={`/admin/menu/${m.id}`} className="text-[13px] font-bold hover:text-rose-deep">

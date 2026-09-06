@@ -169,6 +169,18 @@ export async function createOrder(input: OrderInput): Promise<Order> {
     );
   }
 
+  if (settings.slot_capacity) {
+    const { count } = await db
+      .from("orders")
+      .select("id", { count: "exact", head: true })
+      .eq("slot_date", input.slotDate)
+      .eq("slot_label", input.slotLabel)
+      .neq("status", "cancelled");
+    if ((count ?? 0) >= settings.slot_capacity) {
+      throw new OrderError("That time slot is full. Please choose another slot.", "slot");
+    }
+  }
+
   if (settings.daily_order_cap) {
     const { count } = await db
       .from("orders")
@@ -264,6 +276,7 @@ export function buildCustomerWhatsAppMessage(o: Order, settings: Settings) {
   let msg = `*New order for ${settings.business_name}!*\nOrder ${o.ref}\n\nName: ${o.customer_name}\nWhatsApp: ${o.phone}\n`;
   msg += o.mode === "delivery" ? `Delivery to: ${o.address}\nArea: ${o.zone_name}\n` : `Pickup\n`;
   msg += `When: ${when}\n\n*Items:*\n${items}\n\nSubtotal: AED ${Number(o.subtotal)}\nDelivery: ${Number(o.delivery_fee) ? "AED " + Number(o.delivery_fee) : "Free"}\n*Total: AED ${Number(o.total)}*\nPayment: ${o.payment_method === "cash" ? "Cash" : "Bank transfer"}\n`;
+  if (settings.tax_note) msg += `${settings.tax_note}\n`;
   if (o.is_gift) msg += `\n🎁 Gift for: ${o.gift_recipient || "—"}\nCard message: ${o.gift_message || "—"}\n`;
   if (o.notes) msg += `\nSpecial requests: ${o.notes}\n`;
   msg += `\nPlease confirm. Thank you!`;

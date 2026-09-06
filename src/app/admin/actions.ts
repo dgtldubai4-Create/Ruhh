@@ -9,6 +9,8 @@ import { adminClient } from "@/lib/supabase/admin";
 import { serverClient } from "@/lib/supabase/server";
 import { normalizeSettings } from "@/lib/data";
 import { notifyStatus } from "@/lib/whatsapp";
+import { headers } from "next/headers";
+import { importExternalImage, isInHouse, MAX_UPLOAD, storeImage, toWebImage } from "@/lib/images";
 import type { Order, OrderStatus } from "@/lib/types";
 
 const STATUSES: OrderStatus[] = ["pending", "confirmed", "baking", "out_for_delivery", "ready_for_pickup", "delivered", "cancelled"];
@@ -31,9 +33,11 @@ export async function sendMagicLink(fd: FormData) {
   if (!isSupabaseConfigured()) redirect("/admin/login?error=config");
   if (!email || !(await isAdminEmail(email))) redirect("/admin/login?error=denied");
   const supabase = await serverClient();
+  const h = await headers();
+  const origin = h.get("origin") ?? (h.get("host") ? `https://${h.get("host")}` : env.siteUrl);
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: `${env.siteUrl}/auth/callback?next=/admin`, shouldCreateUser: true },
+    options: { emailRedirectTo: `${origin}/auth/callback?next=/admin`, shouldCreateUser: true },
   });
   if (error) redirect("/admin/login?error=link");
   redirect(`/admin/login?sent=${encodeURIComponent(email)}`);
@@ -60,6 +64,23 @@ export async function updatePaymentStatus(orderId: string, paymentStatus: "unpai
   await adminClient().from("orders").update({ payment_status: paymentStatus }).eq("id", orderId);
   revalidatePath("/admin");
   revalidatePath(`/admin/orders/${orderId}`);
+}
+
+export async function updateOrderAdjustment(fd: FormData) {
+  await requireAdmin();
+  const id = str(fd, "id");
+  const db = adminClient();
+  const { data: o } = await db.from("orders").select("subtotal").eq("id", id).maybeSingle();
+  if (!o) return;
+  const deliveryFee = Math.max(0, num(fd, "delivery_fee"));
+  const adjustment = num(fd, "adjustment_aed");
+  const total = Math.max(0, Number(o.subtotal) + deliveryFee + adjustment);
+  await db
+    .from("orders")
+    .update({ delivery_fee: deliveryFee, adjustment_aed: adjustment, adjustment_note: str(fd, "adjustment_note") || null, total })
+    .eq("id", id);
+  revalidatePath("/admin");
+  revalidatePath(`/admin/orders/${id}`);
 }
 
 /* ---------------- categories ---------------- */
@@ -175,17 +196,46 @@ export async function toggleItemAvailability(id: string, available: boolean) {
 
 /* ---------------- images ---------------- */
 
-const MAX_UPLOAD = 4 * 1024 * 1024;
-
-async function uploadToStorage(file: File, folder: string): Promise<string> {
+async function uploadToStorage(file: File, folder: string, keepAlpha = false): Promise<string> {
   if (!file.type.startsWith("image/")) throw new Error("Please upload an image file.");
-  if (file.size > MAX_UPLOAD) throw new Error("Image must be under 4 MB.");
-  const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
-  const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  if (file.size > MAX_UPLOAD) throw new Error("Image must be under 8 MB.");
+  const web = await toWebImage(Buffer.from(await file.arrayBuffer()), { keepAlpha, maxDim: keepAlpha ? 600 : 1400 });
+  return storeImage(web.buffer, web.contentType, web.ext, folder);
+}
+
+/**
+ * Copies externally hosted photos (e.g. the seeded launch set) into Supabase
+ * storage at web size, a few per call so it fits a serverless timeout.
+ */
+export async function importExternalPhotos(limit = 3): Promise<{ done: number; remaining: number; errors: string[] }> {
+  await requireAdmin();
   const db = adminClient();
-  const { error } = await db.storage.from("media").upload(path, file, { contentType: file.type, upsert: false });
-  if (error) throw new Error(error.message);
-  return db.storage.from("media").getPublicUrl(path).data.publicUrl;
+  const errors: string[] = [];
+  let done = 0;
+  const [{ data: items }, { data: specials }, { data: settings }] = await Promise.all([
+    db.from("menu_items").select("id, name, image_url").not("image_url", "is", null),
+    db.from("specials").select("id, name, image_url").not("image_url", "is", null),
+    db.from("settings").select("hero_image_url, about_image_url, logo_url").eq("id", 1).maybeSingle(),
+  ]);
+  type Job = { label: string; url: string; apply: (u: string) => Promise<unknown> };
+  const jobs: Job[] = [];
+  for (const m of items ?? []) if (!isInHouse(m.image_url)) jobs.push({ label: m.name, url: m.image_url, apply: async (u) => { await db.from("menu_items").update({ image_url: u }).eq("id", m.id); } });
+  for (const sp of specials ?? []) if (!isInHouse(sp.image_url)) jobs.push({ label: `Special: ${sp.name}`, url: sp.image_url, apply: async (u) => { await db.from("specials").update({ image_url: u }).eq("id", sp.id); } });
+  for (const f of ["hero_image_url", "about_image_url", "logo_url"] as const) {
+    const url = settings?.[f];
+    if (url && !isInHouse(url)) jobs.push({ label: f, url, apply: async (u) => { await db.from("settings").update({ [f]: u }).eq("id", 1); } });
+  }
+  for (const job of jobs.slice(0, limit)) {
+    try {
+      const u = await importExternalImage(job.url, job.label === "logo_url" ? "brand" : "items", job.label === "logo_url");
+      await job.apply(u);
+      done++;
+    } catch (e) {
+      errors.push(`${job.label}: ${e instanceof Error ? e.message : "failed"}`);
+    }
+  }
+  revalidateStore();
+  return { done, remaining: Math.max(0, jobs.length - done), errors };
 }
 
 export async function uploadItemPhoto(fd: FormData) {
@@ -208,7 +258,7 @@ export async function uploadLogo(fd: FormData) {
   await requireAdmin();
   const file = fd.get("logo");
   if (!(file instanceof File) || file.size === 0) return;
-  const url = await uploadToStorage(file, "brand");
+  const url = await uploadToStorage(file, "brand", true);
   await adminClient().from("settings").update({ logo_url: url }).eq("id", 1);
   revalidateStore();
 }
@@ -317,6 +367,8 @@ export async function saveSettings(fd: FormData) {
     closed_dates: closedDates,
     slots: slots.length ? slots : normalizeSettings(null).slots,
     daily_order_cap: str(fd, "daily_order_cap") === "" ? null : Math.max(1, num(fd, "daily_order_cap", 1)),
+    slot_capacity: str(fd, "slot_capacity") === "" ? null : Math.max(1, num(fd, "slot_capacity", 1)),
+    tax_note: str(fd, "tax_note") || null,
     default_lead_time_hours: Math.max(0, num(fd, "default_lead_time_hours", 24)),
     free_delivery_over: str(fd, "free_delivery_over") === "" ? null : num(fd, "free_delivery_over"),
     accept_cash: bool(fd, "accept_cash"),

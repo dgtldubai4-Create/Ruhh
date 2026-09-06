@@ -46,6 +46,7 @@ integration for automated status messages.
 2. Open **SQL Editor** and run, in order:
    - `supabase/migrations/0001_init.sql`
    - `supabase/migrations/0002_photos_featured.sql`
+   - `supabase/migrations/0003_operations.sql`
    - `supabase/seed.sql` — **first edit the last statement** to Shweta's real
      email (the first admin), and optionally the WhatsApp number / Instagram /
      pickup address in the first `update settings` block.
@@ -59,8 +60,16 @@ integration for automated status messages.
 
 The seed also sets a launch photo on every menu item, the two specials, the
 home hero and the about section. These are AI-generated placeholders hosted by
-Porter Metrics; replace any of them with real photography from **Admin → Menu**
-and **Admin → Settings** as it becomes available.
+Porter Metrics. After deploying, press **Bring photos in-house** in
+Admin → Settings once: it copies them into your own Supabase storage at web
+size so the site never depends on another service. Replace any of them with
+real photography from **Admin → Menu** and **Admin → Settings** as it becomes
+available.
+
+**Email deliverability.** Supabase's built-in email sender is rate-limited and
+often lands in spam. Before launch, set a custom SMTP provider under
+Authentication → SMTP settings (Resend, Postmark or similar) so magic links
+arrive reliably.
 
 The migration creates all tables, the `media` storage bucket, and row-level
 security so the public key can only read storefront data. All writes go
@@ -80,8 +89,29 @@ through the server with the service-role key.
    | `NEXT_PUBLIC_SITE_URL` | `https://<project>.vercel.app` (update after adding a domain) |
    | `ADMIN_EMAILS` | Shweta's email (bootstrap admin; more can be added in the panel) |
 
+   Optional but recommended:
+
+   | Variable | Value |
+   |---|---|
+   | `RESEND_API_KEY`, `EMAIL_FROM`, `ORDER_ALERT_EMAIL` | Email alert to Shweta for every new order and enquiry (free Resend account, verified sender) |
+   | `CRON_SECRET` | Any long random string; protects the daily keep-alive endpoint |
+
 4. Deploy. Open `https://<project>.vercel.app/admin`, enter the admin email,
-   click the magic link from the email, and you are in.
+   click the magic link from the email, and you are in. The orders board shows
+   a **launch checklist** until every setup item is done.
+
+**Which branch deploys.** The repository's default branch is currently
+`claude/boutique-bakery-app-plan-8f3h8z`, so Vercel deploys from it. Rename or
+merge it to `main` whenever convenient and update Vercel's production branch.
+
+**Plans.** Vercel's free Hobby plan is licensed for non-commercial use; a shop
+taking orders should be on Pro. Supabase's free tier pauses projects after a
+week without activity; the daily keep-alive cron in `vercel.json` prevents
+that, but the Pro plan also adds daily backups.
+
+**Abuse protection.** Order, enquiry and review endpoints are rate-limited per
+IP and carry honeypot fields. For stronger protection enable Vercel Firewall
+rules or Attack Challenge Mode in the Vercel dashboard.
 5. In **Admin → Settings** enter the real WhatsApp number, pickup address and
    bank details. In **Admin → Menu** set the Chocolate Bark prices and switch
    them to visible.

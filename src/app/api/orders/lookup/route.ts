@@ -2,10 +2,13 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { adminClient } from "@/lib/supabase/admin";
 import { normalizePhone } from "@/lib/format";
+import { clientIp, rateLimit, tooMany } from "@/lib/rate-limit";
 
 const schema = z.object({ ref: z.string().trim().min(3).max(20), phone: z.string().trim().min(7).max(25) });
 
 export async function POST(req: Request) {
+  const rl = rateLimit(`lookup:${clientIp(req)}`, 30, 10 * 60 * 1000);
+  if (!rl.ok) return tooMany(rl.retryAfter);
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "Please enter your order reference and phone number." }, { status: 400 });
   const ref = parsed.data.ref.toUpperCase().replace(/\s+/g, "");

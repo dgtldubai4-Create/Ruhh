@@ -289,3 +289,29 @@ h3,
 .m-page {
   animation: page-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+@media print {
+  nav,
+  footer,
+  form,
+  .btn-wa,
+  .btn-p,
+  .btn-o,
+  .print\:hidden {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+  }
+}
+
+.prose-ruhh h2 {
+  font-size: 14px;
+  margin: 18px 0 6px;
+  color: var(--color-rose-deep);
+}
+.prose-ruhh p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-muted);
+}

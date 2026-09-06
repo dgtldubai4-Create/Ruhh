@@ -3,10 +3,11 @@
 -- until prices are entered in the admin panel.
 
 update settings set
-  whatsapp_number = '971500000000',
-  instagram_handle = 'ruhh.dubai',
-  pickup_address = 'Dubai (address shared on confirmation)',
-  bank_details = 'Bank transfer details are shared on WhatsApp once your order is confirmed.',
+  -- TODO before launch (or set in Admin → Settings): real WhatsApp number, Instagram, pickup address, bank details.
+  whatsapp_number = '',
+  instagram_handle = null,
+  pickup_address = null,
+  bank_details = null,
   default_lead_time_hours = 24
 where id = 1;
 

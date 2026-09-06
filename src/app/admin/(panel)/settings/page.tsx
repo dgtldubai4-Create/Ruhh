@@ -1,8 +1,10 @@
-import Image from "next/image";
+import { Photo } from "@/components/photo";
 import { adminClient } from "@/lib/supabase/admin";
 import { normalizeSettings } from "@/lib/data";
 import { isWhatsAppApiConfigured } from "@/lib/env";
 import { removeLogo, removeSettingImage, saveSettings, uploadLogo, uploadSettingImage } from "@/app/admin/actions";
+import { ImportPhotosButton } from "@/components/admin/import-photos-button";
+import { isEmailConfigured } from "@/lib/email";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -59,6 +61,10 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
               <label className="label">Bank transfer details (shown to customers who choose bank transfer)</label>
               <textarea name="bank_details" defaultValue={s.bank_details ?? ""} className="admin-input min-h-[60px]" placeholder="Bank, account name, IBAN" />
             </div>
+            <div className="mt-3">
+              <label className="label">Tax note (optional, shown under the total and on WhatsApp orders)</label>
+              <input name="tax_note" defaultValue={s.tax_note ?? ""} placeholder="e.g. Prices include 5% VAT · TRN 100000000000003" className="admin-input" />
+            </div>
             <div className="mt-3 flex flex-wrap gap-4 text-[13px]">
               <label className="flex items-center gap-2">
                 <input type="checkbox" name="accept_cash" defaultChecked={s.accept_cash} className="accent-rose-deep" /> Accept cash
@@ -68,7 +74,8 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
               </label>
             </div>
             <p className="mt-2 text-[11px] text-muted">
-              WhatsApp Business API: <b>{isWhatsAppApiConfigured() ? "connected" : "not configured"}</b> (set in the hosting environment variables — see README).
+              WhatsApp Business API: <b>{isWhatsAppApiConfigured() ? "connected" : "not configured"}</b> · Email alerts for new orders:{" "}
+              <b>{isEmailConfigured() ? "on" : "not configured"}</b> (both set in the hosting environment variables — see README).
             </p>
           </section>
 
@@ -82,6 +89,10 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
               <div>
                 <label className="label">Daily order cap (blank = none)</label>
                 <input name="daily_order_cap" type="number" min={1} defaultValue={s.daily_order_cap ?? ""} className="admin-input" />
+              </div>
+              <div>
+                <label className="label">Orders per time slot (blank = unlimited)</label>
+                <input name="slot_capacity" type="number" min={1} defaultValue={s.slot_capacity ?? ""} className="admin-input" />
               </div>
               <div>
                 <label className="label">Free delivery over AED (blank = never)</label>
@@ -118,7 +129,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
         <div className="card h-fit p-4">
           <div className="label">Logo</div>
           <div className="relative mx-auto mb-3 flex h-[96px] w-[96px] items-center justify-center overflow-hidden rounded-full bg-rose text-[12px] text-rose-deep">
-            {s.logo_url ? <Image src={s.logo_url} alt="Logo" fill sizes="96px" className="object-cover" unoptimized /> : "No logo"}
+            {s.logo_url ? <Photo src={s.logo_url} alt="Logo" fill sizes="96px" className="object-cover" /> : "No logo"}
           </div>
           <form action={uploadLogo} className="grid gap-2">
             <input type="file" name="logo" accept="image/*" required className="text-[12px]" />
@@ -131,6 +142,11 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
           )}
           <p className="mt-2 text-[11px] text-muted">Square PNG with transparent background looks best. Replaces the heart icon in the header.</p>
 
+          <div className="mt-5 border-t border-line pt-4">
+            <div className="label">Photo hosting</div>
+            <ImportPhotosButton />
+          </div>
+
           {(
             [
               ["hero_image_url", "Home page hero photo", s.hero_image_url, "Wide landscape photo of your bakes. Shown behind the headline on the home page."],
@@ -140,7 +156,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
             <div key={field} className="mt-5 border-t border-line pt-4">
               <div className="label">{label}</div>
               <div className="relative mb-2 h-[110px] overflow-hidden rounded-[10px] bg-cream2">
-                {url ? <Image src={url} alt="" fill sizes="260px" className="object-cover" unoptimized /> : <div className="flex h-full items-center justify-center text-[12px] text-muted">No photo</div>}
+                {url ? <Photo src={url} alt="" fill sizes="260px" className="object-cover" /> : <div className="flex h-full items-center justify-center text-[12px] text-muted">No photo</div>}
               </div>
               <form action={uploadSettingImage} className="grid gap-2">
                 <input type="hidden" name="field" value={field} />

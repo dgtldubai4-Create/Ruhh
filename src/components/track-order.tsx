@@ -108,13 +108,34 @@ export function TrackOrder({ settings }: { settings: Settings }) {
             </div>
             <ul className="mt-2 border-t border-line pt-2 text-[12px] text-muted">
               {order.order_items?.map((i) => (
-                <li key={i.id}>
-                  {i.qty}× {i.item_name}
-                  {i.size_label ? ` (${i.size_label})` : ""}
-                  {i.flavour_text ? ` — ${i.flavour_text}` : ""}
+                <li key={i.id} className="flex justify-between gap-2">
+                  <span>
+                    {i.qty}× {i.item_name}
+                    {i.size_label ? ` (${i.size_label})` : ""}
+                    {i.flavour_text ? ` — ${i.flavour_text}` : ""}
+                  </span>
+                  <span>{aed(i.line_total)}</span>
                 </li>
               ))}
+              <li className="mt-1 flex justify-between border-t border-line pt-1">
+                <span>Delivery</span>
+                <span>{Number(order.delivery_fee) ? aed(order.delivery_fee) : "Free"}</span>
+              </li>
+              {Number(order.adjustment_aed) !== 0 && (
+                <li className="flex justify-between">
+                  <span>{order.adjustment_note || "Adjustment"}</span>
+                  <span>{Number(order.adjustment_aed) > 0 ? "+" : ""}{aed(order.adjustment_aed)}</span>
+                </li>
+              )}
+              <li className="flex justify-between font-bold text-ink">
+                <span>Total</span>
+                <span>{aed(order.total)}</span>
+              </li>
             </ul>
+            {settings.tax_note && <div className="mt-1 text-[10px] text-muted">{settings.tax_note}</div>}
+            <button type="button" onClick={() => window.print()} className="print:hidden mt-2 text-[11px] text-rose-deep underline">
+              Print receipt
+            </button>
           </div>
 
           {order.status === "cancelled" ? (

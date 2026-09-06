@@ -30,6 +30,8 @@ export interface Settings {
   closed_dates: string[];
   slots: string[];
   daily_order_cap: number | null;
+  slot_capacity: number | null;
+  tax_note: string | null;
   default_lead_time_hours: number;
   free_delivery_over: number | null;
   accept_cash: boolean;
@@ -142,6 +144,8 @@ export interface Order {
   payment_status: PaymentStatus;
   subtotal: number;
   delivery_fee: number;
+  adjustment_aed: number;
+  adjustment_note: string | null;
   total: number;
   whatsapp_updates: boolean;
   marketing_opt_in: boolean;

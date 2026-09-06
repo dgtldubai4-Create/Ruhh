@@ -24,6 +24,8 @@ const order: Order = {
   payment_status: "unpaid",
   subtotal: 145,
   delivery_fee: 15,
+  adjustment_aed: 0,
+  adjustment_note: null,
   total: 160,
   whatsapp_updates: true,
   marketing_opt_in: true,

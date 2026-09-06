@@ -43,6 +43,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [placed, setPlaced] = useState<PlacedOrder | null>(null);
+  const [website, setWebsite] = useState(""); // honeypot
 
   const dates = useMemo(() => availableDates(cart.leadHours, settings, 14), [cart.leadHours, settings]);
   // If the cart's lead time pushes the chosen date out of range, fall back to the earliest allowed date.
@@ -100,6 +101,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
           paymentMethod: payment,
           whatsappUpdates: waUpdates,
           marketingOptIn: marketing,
+          website,
         }),
       });
       const json = (await res.json()) as PlacedOrder & { error?: string; field?: string };
@@ -318,6 +320,12 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
       <Toggle on={waUpdates} onChange={setWaUpdates} icon="💬" title="WhatsApp updates" sub="Order confirmed, baking, out for delivery" />
       <Toggle on={marketing} onChange={setMarketing} icon="✨" title="Weekly specials" sub={`${settings.owner_name} messages when something new is baking`} />
 
+      <div className="absolute -left-[9999px] top-0" aria-hidden="true">
+        <label>
+          Website <input tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
+        </label>
+      </div>
+      {settings.tax_note && <p className="mt-1 text-center text-[11px] text-muted">{settings.tax_note}</p>}
       {errors.form && <p className="mb-2 rounded-[10px] bg-danger/10 p-3 text-[12px] text-danger">{errors.form}</p>}
       <button className="btn-wa press mt-4" onClick={submit} disabled={submitting || Boolean(belowMin)}>
         <WhatsAppIcon /> {submitting ? "Placing order…" : `Confirm & send to ${settings.owner_name} on WhatsApp`}

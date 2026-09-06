@@ -36,6 +36,12 @@ export function SiteShell({ settings, children }: { settings: Settings; children
             <Link href="/reviews" className="text-rose-deep">
               Reviews
             </Link>
+            <Link href="/privacy" className="text-muted">
+              Privacy
+            </Link>
+            <Link href="/terms" className="text-muted">
+              Terms
+            </Link>
             <Link href="/admin" className="text-muted/50" aria-label="Admin">
               ·
             </Link>

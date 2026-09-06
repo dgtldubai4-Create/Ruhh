@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Photo } from "@/components/photo";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useMemo, useState } from "react";
 import { ItemPicker } from "@/components/item-picker";
@@ -105,13 +105,13 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
                 className="card lift group flex cursor-pointer flex-col overflow-hidden hover:border-rose-mid"
               >
                 <div className={`relative flex h-[110px] items-center justify-center overflow-hidden text-[40px] ${TILE_BG[i % 4]}`}>
-                  <Image
+                  <Photo
                     src={m.image_url ?? categoryArt(catName(m.category_id))}
                     alt={m.name}
                     fill
                     sizes="(max-width: 680px) 50vw, 220px"
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    unoptimized
+                   
                   />
                   {itemHasOptions(m) && (
                     <span className="absolute right-1.5 top-1.5 rounded-full bg-white/85 px-1.5 py-0.5 text-[9px] font-bold text-rose-deep">options</span>

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Photo } from "@/components/photo";
 import Link from "next/link";
 import { categoryCover, getApprovedReviews, getCategories, getFeatured, getMenu, getSettings, getSpecials, itemHasOptions, itemMinPrice } from "@/lib/data";
 import { categoryArt } from "@/lib/category-art";
@@ -35,7 +35,7 @@ export default async function HomePage() {
       <section className="m-fade-up relative -mx-5 -mt-5 mb-6 overflow-hidden">
         {settings.hero_image_url ? (
           <>
-            <Image src={settings.hero_image_url} alt="" fill priority sizes="(max-width: 680px) 100vw, 680px" className="object-cover" unoptimized />
+            <Photo src={settings.hero_image_url} alt="" fill priority sizes="(max-width: 680px) 100vw, 680px" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2c1a1a]/85 via-[#2c1a1a]/35 to-[#2c1a1a]/10" />
           </>
         ) : (
@@ -102,7 +102,7 @@ export default async function HomePage() {
                 style={{ "--i": i } as React.CSSProperties}
                 className="lift group relative h-[120px] w-[140px] shrink-0 overflow-hidden rounded-[14px] bg-cream2"
               >
-                <Image src={categoryCover(items, c.id) ?? categoryArt(c.name)} alt="" fill sizes="140px" className="object-cover transition-transform duration-500 group-hover:scale-105" unoptimized />
+                <Photo src={categoryCover(items, c.id) ?? categoryArt(c.name)} alt="" fill sizes="140px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#2c1a1a]/75 to-transparent" />
                 <div className="absolute bottom-2.5 left-3 right-3 text-[12px] font-bold leading-tight text-white">{c.name}</div>
               </Link>
@@ -121,7 +121,7 @@ export default async function HomePage() {
               return (
                 <Link key={m.id} href={`/menu?cat=${m.category_id ?? ""}`} style={{ "--i": i } as React.CSSProperties} className="card lift group overflow-hidden">
                   <div className="relative h-[130px] overflow-hidden bg-cream2">
-                    <Image src={m.image_url ?? categoryArt(cat?.name)} alt={m.name} fill sizes="(max-width: 680px) 50vw, 300px" className="object-cover transition-transform duration-500 group-hover:scale-105" unoptimized />
+                    <Photo src={m.image_url ?? categoryArt(cat?.name)} alt={m.name} fill sizes="(max-width: 680px) 50vw, 300px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                   <div className="p-3">
                     <div className="text-[12.5px] font-bold leading-tight">{m.name}</div>
@@ -143,7 +143,7 @@ export default async function HomePage() {
       <div className="m-fade-up card mb-6 overflow-hidden">
         {settings.about_image_url && (
           <div className="relative h-[170px]">
-            <Image src={settings.about_image_url} alt={`${first} baking`} fill sizes="(max-width: 680px) 100vw, 640px" className="object-cover" unoptimized />
+            <Photo src={settings.about_image_url} alt={`${first} baking`} fill sizes="(max-width: 680px) 100vw, 640px" className="object-cover" />
           </div>
         )}
         <div className="flex items-start gap-4 p-5">

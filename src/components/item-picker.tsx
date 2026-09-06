@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { Photo } from "@/components/photo";
 import { useEffect, useState } from "react";
 import { useCart } from "@/components/cart-context";
 import { aed } from "@/lib/format";
@@ -83,7 +83,7 @@ export function ItemPicker({
           ×
         </button>
         <div className="mb-3 flex justify-center">
-          <Image src={m.image_url ?? artUrl} alt={m.name} width={150} height={112} className="h-[112px] w-[150px] rounded-[14px] bg-cream2 object-cover" unoptimized />
+          <Photo src={m.image_url ?? artUrl} alt={m.name} width={150} height={112} className="h-[112px] w-[150px] rounded-[14px] bg-cream2 object-cover" />
         </div>
         <h3 className="text-center text-[17px] font-bold">{m.name}</h3>
         {m.description && <p className="mb-3 text-center text-[12px] text-muted">{m.description}</p>}

@@ -151,7 +151,7 @@ export async function alertOwner(o: Order) {
 }
 
 export function verifySignature(rawBody: string, header: string | null) {
-  if (!env.whatsapp.appSecret) return true; // not configured → accept (dev)
+  if (!env.whatsapp.appSecret) return process.env.NODE_ENV !== "production"; // unsigned only in development
   if (!header?.startsWith("sha256=")) return false;
   const expected = createHmac("sha256", env.whatsapp.appSecret).update(rawBody).digest("hex");
   const got = header.slice(7);

@@ -5,6 +5,7 @@ import { STATUS_LABELS, type Order, type OrderStatus } from "@/lib/types";
 import { PaymentBadge, StatusBadge } from "@/components/admin/status-badge";
 import { OrderControls } from "@/components/admin/order-controls";
 import { todayISO } from "@/lib/availability";
+import { LaunchChecklist } from "@/components/admin/launch-checklist";
 
 const FILTERS: { key: string; label: string; statuses?: OrderStatus[] }[] = [
   { key: "active", label: "Active", statuses: ["pending", "confirmed", "baking", "out_for_delivery", "ready_for_pickup"] },
@@ -31,6 +32,7 @@ export default async function OrdersPage({ searchParams }: { searchParams: Promi
 
   return (
     <>
+      <LaunchChecklist />
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-[18px] font-bold">
           Orders {newCount ? <span className="tag ml-1 bg-peach text-peach-deep">{newCount} new</span> : null}

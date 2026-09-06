@@ -9,7 +9,7 @@ import type { Settings } from "@/lib/types";
 const OCCASIONS = ["Birthday", "Anniversary", "Wedding", "Baby shower", "Corporate", "Other"];
 
 export function EnquiryForm({ settings }: { settings: Settings }) {
-  const [form, setForm] = useState({ name: "", phone: "", occasion: "Birthday", eventDate: "", servings: "", description: "", budget: "" });
+  const [form, setForm] = useState({ name: "", phone: "", occasion: "Birthday", eventDate: "", servings: "", description: "", budget: "", website: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState<{ id: string } | null>(null);
@@ -40,6 +40,7 @@ export function EnquiryForm({ settings }: { settings: Settings }) {
           servings: form.servings.trim() || undefined,
           description: form.description.trim(),
           budget: form.budget ? Number(form.budget) : undefined,
+          website: form.website,
         }),
       });
       const json = (await res.json()) as { id?: string; error?: string };
@@ -117,6 +118,11 @@ export function EnquiryForm({ settings }: { settings: Settings }) {
           placeholder="Flavours, design, colours, theme, dietary needs, text on the cake…"
         />
         {errors.description && <p className="mt-1 text-[11px] text-danger">{errors.description}</p>}
+      </div>
+      <div className="absolute -left-[9999px] top-0" aria-hidden="true">
+        <label>
+          Website <input tabIndex={-1} autoComplete="off" value={form.website} onChange={set("website")} />
+        </label>
       </div>
       {errors.form && <p className="mt-2 rounded-[10px] bg-danger/10 p-3 text-[12px] text-danger">{errors.form}</p>}
       <button className="btn-wa mt-4" disabled={busy}>

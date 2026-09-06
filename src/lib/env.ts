@@ -8,6 +8,12 @@ export const env = {
     .split(",")
     .map((e) => e.trim().toLowerCase())
     .filter(Boolean),
+  email: {
+    apiKey: process.env.RESEND_API_KEY ?? "",
+    from: process.env.EMAIL_FROM ?? "Ruhh <orders@resend.dev>",
+    alertTo: process.env.ORDER_ALERT_EMAIL ?? "",
+  },
+  cronSecret: process.env.CRON_SECRET ?? "",
   whatsapp: {
     token: process.env.WHATSAPP_ACCESS_TOKEN ?? "",
     phoneNumberId: process.env.WHATSAPP_PHONE_NUMBER_ID ?? "",

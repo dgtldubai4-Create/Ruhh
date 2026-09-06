@@ -5,6 +5,7 @@ import { aed, fmtDate, fmtDateTime } from "@/lib/format";
 import { STATUS_LABELS, type Order } from "@/lib/types";
 import { PaymentBadge, StatusBadge } from "@/components/admin/status-badge";
 import { OrderControls } from "@/components/admin/order-controls";
+import { updateOrderAdjustment } from "@/app/admin/actions";
 
 interface WaMsg {
   id: string;
@@ -107,6 +108,12 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
                 <td>Delivery</td>
                 <td className="text-right">{aed(o.delivery_fee)}</td>
               </tr>
+              {Number(o.adjustment_aed) !== 0 && (
+                <tr>
+                  <td>{o.adjustment_note || "Adjustment"}</td>
+                  <td className="text-right">{Number(o.adjustment_aed) > 0 ? "+" : ""}{aed(o.adjustment_aed)}</td>
+                </tr>
+              )}
               <tr className="text-[15px] font-bold text-rose-deep">
                 <td className="pt-1">Total</td>
                 <td className="pt-1 text-right">{aed(o.total)}</td>
@@ -115,6 +122,25 @@ export default async function OrderDetail({ params }: { params: Promise<{ id: st
           </table>
           <div className="label mt-4">Update status</div>
           <OrderControls orderId={o.id} mode={o.mode} status={o.status} paymentStatus={o.payment_status} />
+          <details className="mt-4">
+            <summary className="cursor-pointer text-[12px] text-rose-deep">Adjust delivery fee or add a discount / extra</summary>
+            <form action={updateOrderAdjustment} className="mt-2 grid gap-2 sm:grid-cols-[110px_110px_1fr_auto]">
+              <input type="hidden" name="id" value={o.id} />
+              <div>
+                <label className="label">Delivery AED</label>
+                <input name="delivery_fee" type="number" step="0.5" min={0} defaultValue={Number(o.delivery_fee)} className="admin-input" />
+              </div>
+              <div>
+                <label className="label">Adjust AED (±)</label>
+                <input name="adjustment_aed" type="number" step="0.5" defaultValue={Number(o.adjustment_aed)} className="admin-input" />
+              </div>
+              <div>
+                <label className="label">Reason (shown to customer)</label>
+                <input name="adjustment_note" defaultValue={o.adjustment_note ?? ""} placeholder="e.g. Custom topper, Loyalty discount" className="admin-input" />
+              </div>
+              <button className="btn-o self-end px-3 py-1.5 text-[12px]">Save</button>
+            </form>
+          </details>
         </div>
 
         <div className="card p-4">

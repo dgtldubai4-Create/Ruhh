@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Photo } from "@/components/photo";
 import { HeartLogo } from "@/components/icons";
 
 export function BrandLogo({ url, size = 36 }: { url: string | null; size?: number }) {
@@ -8,7 +8,7 @@ export function BrandLogo({ url, size = 36 }: { url: string | null; size?: numbe
       style={{ width: size, height: size }}
     >
       {url ? (
-        <Image src={url} alt="Ruhh logo" width={size} height={size} className="h-full w-full object-cover" unoptimized />
+        <Photo src={url} alt="Ruhh logo" width={size} height={size} className="h-full w-full object-cover" />
       ) : (
         <HeartLogo />
       )}

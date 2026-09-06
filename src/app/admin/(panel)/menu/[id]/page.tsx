@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { Photo } from "@/components/photo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { adminClient } from "@/lib/supabase/admin";
@@ -95,7 +95,7 @@ export default async function EditItemPage({ params, searchParams }: { params: P
         <div className="card h-fit p-4">
           <div className="label">Photo</div>
           <div className="relative mb-3 flex h-[160px] items-center justify-center overflow-hidden rounded-[12px] bg-cream2 text-[48px]">
-            {m.image_url ? <Image src={m.image_url} alt={m.name} fill sizes="260px" className="object-cover" unoptimized /> : m.emoji}
+            {m.image_url ? <Photo src={m.image_url} alt={m.name} fill sizes="260px" className="object-cover" /> : m.emoji}
           </div>
           <form action={uploadItemPhoto} className="grid gap-2">
             <input type="hidden" name="id" value={m.id} />

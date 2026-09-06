@@ -9,6 +9,7 @@ export function ReviewForm({ ownerName }: { ownerName: string }) {
   const [rating, setRating] = useState(5);
   const [body, setBody] = useState("");
   const [ref, setRef] = useState(params.get("ref") ?? "");
+  const [website, setWebsite] = useState("");
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -23,7 +24,7 @@ export function ReviewForm({ ownerName }: { ownerName: string }) {
       const res = await fetch("/api/reviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name.trim(), rating, body: body.trim(), orderRef: ref.trim() || undefined }),
+        body: JSON.stringify({ name: name.trim(), rating, body: body.trim(), orderRef: ref.trim() || undefined, website }),
       });
       const json = (await res.json()) as { error?: string };
       if (!res.ok) return setError(json.error ?? "Something went wrong.");
@@ -63,6 +64,11 @@ export function ReviewForm({ ownerName }: { ownerName: string }) {
       <textarea className="field mb-3 min-h-[90px]" value={body} onChange={(e) => setBody(e.target.value)} placeholder="What did you order? How was it?" />
       <label className="label">Order reference (optional)</label>
       <input className="field mb-3" value={ref} onChange={(e) => setRef(e.target.value)} placeholder="RUH-1042" />
+      <div className="absolute -left-[9999px] top-0" aria-hidden="true">
+        <label>
+          Website <input tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
+        </label>
+      </div>
       {error && <p className="mb-2 text-[12px] text-danger">{error}</p>}
       <button className="btn-p w-full rounded-[10px]" disabled={busy}>
         {busy ? "Sending…" : "Submit review"}
