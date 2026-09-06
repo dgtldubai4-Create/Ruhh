@@ -43,7 +43,7 @@ export function RoleMenu({ mode }: { mode: "creator" | "admin" }) {
               <div className="label">{t.common.switchRole}</div>
               <div className="flex flex-wrap gap-2">
                 {ROLES.map((r) => (
-                  <button key={r} onClick={() => setAdminRole(r)} aria-pressed={s.session.adminRole === r} className={cx("rounded-pill border px-3 py-1.5 text-[13px] font-semibold transition-colors", s.session.adminRole === r ? "border-ink bg-ink text-card" : "border-line bg-card hover:bg-paper-2")}>
+                  <button key={r} onClick={() => setAdminRole(r)} aria-pressed={s.session.adminRole === r} className={cx("rounded-pill border px-3 py-1.5 text-[13px] font-semibold transition-colors", s.session.adminRole === r ? "border-ink bg-ink text-paper" : "border-line bg-card hover:bg-paper-2")}>
                     {ROLE_LABELS[r]}
                   </button>
                 ))}

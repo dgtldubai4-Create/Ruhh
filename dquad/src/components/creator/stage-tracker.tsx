@@ -25,7 +25,7 @@ export function StageTracker({ journey, accent = "grass" }: { journey: Journey; 
               <span
                 className={cx(
                   "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 text-[12px] font-bold transition-colors duration-300",
-                  done && !skipped && "border-ink bg-ink text-card",
+                  done && !skipped && "border-ink bg-ink text-paper",
                   skipped && "border-line-strong bg-paper-2 text-stone",
                   active && "border-ink text-ink",
                   !done && !active && "border-line bg-card text-stone",

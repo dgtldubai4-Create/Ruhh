@@ -62,7 +62,7 @@ export function PortalShell({ mode, items, children, accent = "grass" }: { mode:
       <nav className="fixed inset-x-3 bottom-3 z-40 md:hidden" aria-label="Portal mobile">
         <div className="pill-nav w-full justify-between bg-card">
           {items.map((it) => (
-            <Link key={it.href} href={it.href} className={cx("flex flex-1 flex-col items-center gap-0.5 rounded-pill px-1 py-1.5 text-[10.5px] font-semibold", isActive(it.href) ? "bg-ink text-card" : "text-ink")} aria-current={isActive(it.href) ? "page" : undefined}>
+            <Link key={it.href} href={it.href} className={cx("flex flex-1 flex-col items-center gap-0.5 rounded-pill px-1 py-1.5 text-[10.5px] font-semibold", isActive(it.href) ? "bg-ink text-paper" : "text-ink")} aria-current={isActive(it.href) ? "page" : undefined}>
               <it.icon size={20} weight={isActive(it.href) ? "fill" : "regular"} />
               {it.label}
             </Link>

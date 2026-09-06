@@ -33,8 +33,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 8, scale: 0.98 }}
               transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
-              className="pointer-events-auto flex max-w-[420px] items-start gap-3 rounded-card border-2 border-ink bg-card px-4 py-3"
-              style={{ boxShadow: "5px 5px 0 0 var(--color-ink)" }}
+              className="pointer-events-auto flex max-w-[420px] items-start gap-3 rounded-card border border-line-strong bg-card px-4 py-3"
             >
               {t.kind === "success" ? <CheckCircle size={22} weight="fill" className="mt-0.5 shrink-0 text-grass" /> : <Info size={22} weight="fill" className="mt-0.5 shrink-0 text-ink" />}
               <div>
@@ -127,8 +126,7 @@ export function Sheet({ open, onClose, title, children, footer, size = "md" }: {
           />
           <motion.div
             role="dialog" aria-modal="true"
-            className={cx("relative flex max-h-[92dvh] w-full flex-col rounded-t-card border-2 border-ink bg-card sm:rounded-card", size === "lg" ? "sm:max-w-[760px]" : "sm:max-w-[520px]")}
-            style={{ boxShadow: "8px 8px 0 0 var(--color-ink)" }}
+            className={cx("relative flex max-h-[92dvh] w-full flex-col rounded-t-card border border-line-strong bg-card sm:rounded-card", size === "lg" ? "sm:max-w-[760px]" : "sm:max-w-[520px]")}
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 40, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.98 }}
             transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
           >

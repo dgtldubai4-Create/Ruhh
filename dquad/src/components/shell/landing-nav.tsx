@@ -37,7 +37,7 @@ export function LandingNav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 pt-4">
       <nav
-        className={cx("pill-nav w-full max-w-[1100px] justify-between transition-[padding,background-color] duration-300", scrolled ? "bg-card" : "bg-card/80")}
+        className={cx("pill-nav w-full max-w-[1100px] justify-between transition-[background-color] duration-300", scrolled ? "bg-paper/90" : "bg-paper/60")}
         aria-label="Primary"
       >
         <Link href="/" className="flex items-center gap-2 rounded-pill ps-2 pe-3 py-1.5 font-display text-[17px] font-bold">
@@ -60,7 +60,7 @@ export function LandingNav() {
         </button>
       </nav>
       {open && (
-        <div className="absolute inset-x-4 top-[72px] rounded-card border-2 border-ink bg-card p-4 lg:hidden" style={{ boxShadow: "6px 6px 0 0 var(--color-ink)" }}>
+        <div className="absolute inset-x-4 top-[72px] rounded-card border border-line-strong bg-paper-2 p-4 lg:hidden">
           <div className="flex flex-col gap-1">
             {SECTIONS.map((id) => (
               <a key={id} href={`#${id}`} onClick={() => setOpen(false)} className="pill-link">

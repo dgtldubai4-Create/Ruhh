@@ -36,15 +36,15 @@ Deploy on Vercel with the project root set to `dquad/`. No environment variables
 - `src/lib/i18n`: English and Arabic dictionaries, `dir="rtl"` switching, logical CSS properties throughout.
 - `src/components/motion`: reveal, stagger, 3D tilt, parallax, counters, paper confetti. Everything
   collapses under `prefers-reduced-motion`.
-- `src/components/art`: product-like pack illustrations built from layered paper shapes, composed
-  paper scenes, and generated paper-cut illustrations (see below).
+- `src/components/art`: lit product-pack renders, studio spotlight scenes, and generated
+  photographic moments (see below). Near-black ground, bone text, one grass accent.
 
 ### Illustrations
 
-The paper-cut illustrations (hero community scene, product moments, creator portraits, rewards,
-delivery, brand team) were generated with the Porter Metrics creative studio for this prototype
-and are referenced by their permanent asset URLs in `src/components/art/manifest.ts`. If an asset
-cannot load, the layout falls back to a composed paper scene. Replace them with approved Dabur
+The photographic moments (studio creator hero, amla oil, honey, toothpaste, filming a pack) were
+generated with the Porter Metrics creative studio for this prototype and are referenced by their
+permanent asset URLs in `src/components/art/manifest.ts`. Any slot without an asset, or where the
+asset cannot load, renders a studio spotlight scene with a lit pack render instead. Replace them with approved Dabur
 photography or commissioned art before any public use.
 
 ### Product catalogue

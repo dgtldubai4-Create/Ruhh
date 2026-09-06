@@ -217,7 +217,7 @@ export default function AdminOverview() {
             return (
               <li key={a.id}>
                 <button type="button" className="flex w-full items-start gap-3 px-4 py-3 text-start hover:bg-paper-2 sm:px-5" aria-expanded={open} onClick={() => setOpenActivity(open ? null : a.id)}>
-                  {creator ? <Portrait c={creator} size={36} /> : <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink text-card" aria-hidden><ChatCircle size={18} weight="fill" /></span>}
+                  {creator ? <Portrait c={creator} size={36} /> : <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink text-paper" aria-hidden><ChatCircle size={18} weight="fill" /></span>}
                   <span className="min-w-0 flex-1 text-[14.5px] leading-snug">
                     <span className="font-semibold">{a.actor}</span> {a.text}
                   </span>

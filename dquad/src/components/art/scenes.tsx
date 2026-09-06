@@ -3,6 +3,7 @@ import { cx } from "@/lib/format";
 import { ACCENT } from "@/components/ui/accent";
 import type { Accent } from "@/lib/store/types";
 import { ART } from "./manifest";
+import { Pack } from "./pack";
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -28,19 +29,19 @@ export function Art({ id, alt, className, fallback, priority }: { id: keyof type
   );
 }
 
-/** Layered paper shapes: hills, sun, leaves. Composed, not drawn as icon paths. */
-export function PaperScene({ accent = "sun", className }: { accent?: Accent; className?: string }) {
+/**
+ * Studio scene: a single warm spotlight on a near-black set with a lit product
+ * render in the beam. Used wherever a photographic moment has not loaded.
+ */
+export function PaperScene({ accent = "grass", className, shape = "bottle", label, sub }: { accent?: Accent; className?: string; shape?: "bottle" | "tube" | "jar" | "box" | "sachet" | "spray" | "carton"; label?: string; sub?: string }) {
   const a = ACCENT[accent];
   return (
-    <div className={cx("relative h-full w-full overflow-hidden bg-paper-2", className)} aria-hidden>
-      <span className="absolute rounded-full" style={{ width: "34%", paddingTop: "34%", top: "8%", right: "10%", background: a.hex }} />
-      <span className="absolute rounded-full" style={{ width: "24%", paddingTop: "24%", top: "13%", right: "15%", background: a.softHex }} />
-      <span className="absolute rounded-[50%]" style={{ width: "120%", height: "60%", bottom: "-20%", left: "-30%", background: "var(--color-grass-soft)" }} />
-      <span className="absolute rounded-[50%]" style={{ width: "100%", height: "50%", bottom: "-22%", left: "20%", background: "var(--color-grass)" }} />
-      <span className="absolute rounded-[50%]" style={{ width: "90%", height: "40%", bottom: "-18%", left: "-20%", background: "var(--color-grass-deep)" }} />
-      <Leaf className="absolute" style={{ width: "18%", left: "12%", bottom: "26%", transform: "rotate(-30deg)" }} color="var(--color-grass)" />
-      <Leaf className="absolute" style={{ width: "12%", left: "30%", bottom: "34%", transform: "rotate(20deg)" }} color="var(--color-mint)" />
-      <Leaf className="absolute" style={{ width: "14%", right: "28%", bottom: "30%", transform: "rotate(-10deg)" }} color="var(--color-grass-deep)" />
+    <div className={cx("relative flex h-full w-full items-end justify-center overflow-hidden", className)} style={{ background: "#0b0f0d" }} aria-hidden>
+      <span className="absolute inset-0" style={{ background: `radial-gradient(ellipse 60% 70% at 50% 20%, ${a.hex}33 0%, rgba(11,15,13,0) 60%)` }} />
+      <span className="absolute inset-x-0 bottom-0 h-[38%]" style={{ background: "linear-gradient(180deg, rgba(11,15,13,0) 0%, #0b0f0d 100%)" }} />
+      <span className="absolute left-1/2 top-[8%] h-[70%] w-[46%] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(243,239,228,0.14) 0%, rgba(243,239,228,0) 65%)" }} />
+      <span className="absolute left-1/2 bottom-[16%] h-[8%] w-[60%] -translate-x-1/2 rounded-[50%]" style={{ background: `radial-gradient(ellipse at center, ${a.hex}40, rgba(0,0,0,0) 70%)` }} />
+      <div className="relative mb-[16%] scale-[1.15]"><Pack shape={shape} accent={accent} label={label ?? "Dabur"} sub={sub} size={110} /></div>
     </div>
   );
 }
@@ -62,10 +63,10 @@ export function PointsCoin({ size = 64, className, spin = true }: { size?: numbe
   return (
     <span className={cx("perspective inline-block", className)} style={{ width: size, height: size }} aria-hidden>
       <span className={cx("preserve-3d relative block h-full w-full", spin && "anim-coin")}>
-        <span className="backface-hidden absolute inset-0 flex items-center justify-center rounded-full bg-sun font-display font-bold text-ink" style={{ boxShadow: "inset 0 0 0 4px var(--color-ink)", fontSize: size * 0.4 }}>
+        <span className="backface-hidden absolute inset-0 flex items-center justify-center rounded-full bg-sun font-display font-bold text-ink" style={{ boxShadow: "inset 0 0 0 3px rgba(15,20,17,0.6), 0 8px 18px rgba(0,0,0,0.45)", fontSize: size * 0.4, color: "#0f1411" }}>
           D
         </span>
-        <span className="backface-hidden absolute inset-0 flex items-center justify-center rounded-full bg-amber font-display font-bold text-ink" style={{ transform: "rotateY(180deg)", boxShadow: "inset 0 0 0 4px var(--color-ink)", fontSize: size * 0.32 }}>
+        <span className="backface-hidden absolute inset-0 flex items-center justify-center rounded-full bg-amber font-display font-bold text-ink" style={{ transform: "rotateY(180deg)", boxShadow: "inset 0 0 0 3px rgba(15,20,17,0.6), 0 8px 18px rgba(0,0,0,0.45)", fontSize: size * 0.32, color: "#0f1411" }}>
           +
         </span>
       </span>
@@ -73,13 +74,13 @@ export function PointsCoin({ size = 64, className, spin = true }: { size?: numbe
   );
 }
 
-/** Playful paper sticker with a hard offset, for small labels on cards. */
-export function Sticker({ children, accent = "sun", className, rotate = -4 }: { children: React.ReactNode; accent?: Accent; className?: string; rotate?: number }) {
+/** Accent chip for small callouts on cards. */
+export function Sticker({ children, accent = "sun", className, rotate = -3 }: { children: React.ReactNode; accent?: Accent; className?: string; rotate?: number }) {
   const a = ACCENT[accent];
   return (
     <span
-      className={cx("inline-flex items-center gap-1 rounded-pill border-2 border-ink px-3 py-1 font-display text-[13px] font-bold text-ink", className)}
-      style={{ background: a.hex, transform: `rotate(${rotate}deg)`, boxShadow: "3px 3px 0 0 var(--color-ink)" }}
+      className={cx("inline-flex items-center gap-1 rounded-pill px-3 py-1 font-display text-[13px] font-bold", className)}
+      style={{ background: a.hex, color: "#0f1411", transform: `rotate(${rotate}deg)` }}
     >
       {children}
     </span>

@@ -76,7 +76,7 @@ export default function CreatorRewards() {
       {/* Balance */}
       <Reveal y={12} amount={0.05}>
         <div className="grid gap-5 lg:grid-cols-12">
-          <div className="relative flex flex-col gap-5 rounded-card border-2 border-ink bg-card p-5 sm:flex-row sm:items-center sm:gap-8 sm:p-6 lg:col-span-8" style={{ boxShadow: "6px 6px 0 0 var(--color-ink)" }}>
+          <div className="relative flex flex-col gap-5 rounded-card border border-line-strong bg-card p-5 sm:flex-row sm:items-center sm:gap-8 sm:p-6 lg:col-span-8">
             <PointsCoin size={84} className="shrink-0" />
             <div className="grid flex-1 grid-cols-2 gap-4 sm:grid-cols-4">
               <div>
@@ -126,7 +126,7 @@ export default function CreatorRewards() {
             return (
               <StaggerItem key={r.id}>
                 <Tilt max={6} scale={1.01} className="h-full">
-                  <article className={cx("flex h-full flex-col overflow-hidden rounded-card border-2 border-ink bg-card", out && "opacity-80")} style={{ boxShadow: "5px 5px 0 0 var(--color-ink)" }}>
+                  <article className={cx("flex h-full flex-col overflow-hidden rounded-card border border-line-strong bg-card", out && "opacity-80")}>
                     <div className="relative flex h-[160px] items-end justify-center" style={{ background: a.softHex }}>
                       <span className="absolute -end-10 -top-10 h-40 w-40 rounded-full" style={{ background: a.hex, opacity: 0.5 }} aria-hidden />
                       {r.shape ? (
@@ -136,7 +136,7 @@ export default function CreatorRewards() {
                         </div>
                       ) : (
                         <div className="relative flex h-full w-full items-center justify-center" aria-hidden>
-                          <span className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-ink bg-card" style={{ boxShadow: "4px 4px 0 0 var(--color-ink)" }}>
+                          <span className="flex h-20 w-20 items-center justify-center rounded-full border border-line-strong bg-card">
                             <Cat size={38} weight="fill" className="text-ink" />
                           </span>
                           <Sticker accent={r.accent} rotate={-8} className="absolute bottom-4 end-4">

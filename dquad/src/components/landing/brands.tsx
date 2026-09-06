@@ -18,7 +18,7 @@ export function BrandShowcase() {
   const { t } = useLang();
   const s = useAppState();
   return (
-    <section id="brands" className="container-x scroll-mt-24 py-20 sm:py-28" aria-labelledby="brands-title">
+    <section id="brands" className="container-x scroll-mt-24 py-24 sm:py-32" aria-labelledby="brands-title">
       <Reveal>
         <h2 id="brands-title" className="display-lg max-w-[18ch] text-balance">
           {t.brands.title}
@@ -33,21 +33,21 @@ export function BrandShowcase() {
           return (
             <StaggerItem key={b.id} as="li" className={cx(moment?.span)}>
               <Tilt max={7} className="h-full">
-                <div className="relative h-full overflow-hidden rounded-card border-2 border-ink bg-card" style={{ boxShadow: "5px 5px 0 0 var(--color-ink)" }}>
+                <div className="relative h-full overflow-hidden rounded-card border border-line bg-card">
                   {moment ? (
                     <>
-                      <Art id={moment.art} alt={`${b.name} moment, paper-cut illustration`} className="h-full w-full" fallback={<PaperScene accent={b.accent} />} />
+                      <Art id={moment.art} alt={`${b.name} product moment`} className="h-full w-full" fallback={<PaperScene accent={b.accent} shape={b.packShape} label={b.name.replace("Dabur ", "")} />} />
                       <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-4">
-                        <span className="rounded-pill border-2 border-ink bg-card px-3 py-1 font-display text-[15px] font-bold">{b.name}</span>
+                        <span className="rounded-pill bg-paper/80 px-3 py-1 font-display text-[15px] font-bold backdrop-blur-sm">{b.name}</span>
                       </div>
                     </>
                   ) : (
-                    <div className="flex h-full flex-col items-center justify-end p-4" style={{ background: a.softHex }}>
-                      <div className="absolute inset-x-0 top-4 flex justify-center">
-                        <Pack shape={b.packShape} accent={b.accent} label={b.name.replace("Dabur ", "")} size={64} tilt={-6} />
+                    <div className="flex h-full flex-col items-center justify-end p-4" style={{ background: `radial-gradient(ellipse at 50% 25%, ${a.softHex}, rgba(25,31,27,0) 70%)` }}>
+                      <div className="absolute inset-x-0 top-5 flex justify-center">
+                        <Pack shape={b.packShape} accent={b.accent} label={b.name.replace("Dabur ", "")} size={62} tilt={-6} />
                       </div>
-                      <span className="rounded-pill border-2 border-ink bg-card px-3 py-1 font-display text-[14px] font-bold">{b.name}</span>
-                      <span className="mt-1 text-[12px] text-ink/70">{b.tagline}</span>
+                      <span className="font-display text-[15px] font-bold">{b.name}</span>
+                      <span className="mt-0.5 text-[12px] text-stone">{b.tagline}</span>
                     </div>
                   )}
                 </div>

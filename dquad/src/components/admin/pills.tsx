@@ -32,7 +32,7 @@ export function Pill({ active, onClick, children, className }: { active: boolean
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={cx("rounded-pill border px-3 py-1.5 text-[13px] font-semibold transition-colors duration-150", active ? "border-ink bg-ink text-card" : "border-line bg-card text-ink hover:bg-paper-2", className)}
+      className={cx("rounded-pill border px-3 py-1.5 text-[13px] font-semibold transition-colors duration-150", active ? "border-ink bg-ink text-paper" : "border-line bg-card text-ink hover:bg-paper-2", className)}
     >
       {children}
     </button>
@@ -50,7 +50,7 @@ export function Tabs<T extends string>({ tabs, value, onChange, label }: { tabs:
           type="button"
           aria-selected={value === tb.value}
           onClick={() => onChange(tb.value)}
-          className={cx("shrink-0 rounded-pill border px-4 py-2 text-[14px] font-semibold transition-colors duration-150", value === tb.value ? "border-ink bg-ink text-card" : "border-line bg-card text-ink hover:bg-paper-2")}
+          className={cx("shrink-0 rounded-pill border px-4 py-2 text-[14px] font-semibold transition-colors duration-150", value === tb.value ? "border-ink bg-ink text-paper" : "border-line bg-card text-ink hover:bg-paper-2")}
         >
           {tb.label}
           {typeof tb.count === "number" && tb.count > 0 && <span className={cx("ms-1.5 rounded-pill px-1.5 py-0.5 text-[11px] tabular", value === tb.value ? "bg-card/20 text-card" : "bg-paper-2 text-stone")}>{tb.count}</span>}

@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useLang } from "@/lib/i18n/provider";
 import { useAppState } from "@/lib/store/hooks";
 import { DemoEntryButtons } from "@/components/shell/demo-entry";
-import { Art, PointsCoin, Sticker, Leaf, PaperScene } from "@/components/art/scenes";
+import { Art, PointsCoin, Sticker, PaperScene } from "@/components/art/scenes";
 import { Pack } from "@/components/art/pack";
 import { Parallax, Counter, useReduce } from "@/components/motion";
 
@@ -23,84 +23,69 @@ export function Hero() {
   });
 
   return (
-    <section className="relative overflow-hidden pt-28 sm:pt-32 lg:min-h-[100dvh] lg:pt-36" aria-labelledby="hero-title">
-      {/* paper hills */}
-      <span className="pointer-events-none absolute -bottom-[18%] -start-[10%] h-[46%] w-[70%] rounded-[50%] bg-grass-soft" aria-hidden />
-      <span className="pointer-events-none absolute -bottom-[26%] start-[30%] h-[44%] w-[80%] rounded-[50%] bg-grass" aria-hidden />
+    <section className="relative overflow-hidden pt-28 sm:pt-32 lg:pt-36" aria-labelledby="hero-title">
+      {/* stage light */}
+      <span className="pointer-events-none absolute -top-40 start-1/2 h-[70vh] w-[120vw] -translate-x-1/2" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(70,178,87,0.16) 0%, rgba(15,20,17,0) 60%)" }} aria-hidden />
 
-      <div className="container-x relative grid items-center gap-10 lg:grid-cols-12 lg:gap-6">
-        <div className="lg:col-span-6">
-          <motion.p {...rise(0)} className="mb-3 font-display text-[clamp(1.1rem,2vw,1.4rem)] font-semibold text-grass">
+      <div className="container-x relative grid items-end gap-12 lg:grid-cols-12 lg:gap-8">
+        <div className="lg:col-span-7">
+          <motion.p {...rise(0)} className="mb-5 flex items-center gap-3 font-display text-[15px] font-semibold uppercase tracking-[0.18em] text-grass">
+            <span className="inline-block h-px w-10 bg-grass" aria-hidden />
             {t.brand}
           </motion.p>
-          <motion.h1 {...rise(0.08)} id="hero-title" className="display-xl max-w-[12ch] text-balance">
+          <motion.h1 {...rise(0.08)} id="hero-title" className="display-xl max-w-[10ch] text-balance">
             {t.tagline}
           </motion.h1>
-          <motion.p {...rise(0.16)} className="lede mt-6 max-w-[52ch]">
+          <motion.p {...rise(0.16)} className="lede mt-7 max-w-[50ch]">
             {t.hero.lede}
           </motion.p>
-          <motion.div {...rise(0.24)} className="mt-8">
+          <motion.div {...rise(0.24)} className="mt-9">
             <DemoEntryButtons large />
             <p className="mt-3 text-[13px] text-stone">{t.hero.note}</p>
           </motion.div>
-
-          <motion.dl {...rise(0.34)} className="mt-10 grid max-w-[520px] grid-cols-3 gap-3">
-            {[
-              { v: s.creators.length, l: t.hero.stat1 },
-              { v: openBrands, l: t.hero.stat2 },
-              { v: released, l: t.hero.stat3 },
-            ].map((st) => (
-              <div key={st.l} className="rounded-card border border-line bg-card/80 px-4 py-3">
-                <dt className="sr-only">{st.l}</dt>
-                <dd className="font-display text-[28px] font-bold leading-none">
-                  <Counter value={st.v} />
-                </dd>
-                <dd className="mt-1 text-[12.5px] text-stone">{st.l}</dd>
-              </div>
-            ))}
-          </motion.dl>
         </div>
 
-        {/* Layered paper stage with depth */}
-        <div className="relative mt-6 lg:col-span-6 lg:mt-0" aria-hidden>
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 40, rotate: -1 }}
-            animate={{ opacity: 1, y: 0, rotate: -2 }}
-            transition={{ duration: 1, delay: 0.2, ease: EASE }}
-            className="perspective relative mx-auto max-w-[640px]"
-          >
-            <div className="card-paper overflow-hidden rounded-card">
-              <Art id="heroCommunity" alt="" priority className="aspect-[16/11] w-full" fallback={<PaperScene accent="sun" />} />
+        <motion.div initial={reduce ? false : { opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.25, ease: EASE }} className="relative lg:col-span-5" aria-hidden>
+          <div className="relative overflow-hidden rounded-card border border-line-strong">
+            <Art id="heroCommunity" alt="" priority className="aspect-[4/5] w-full sm:aspect-[16/11] lg:aspect-[4/5]" fallback={<PaperScene accent="grass" shape="bottle" label="Amla" sub="hair oil" />} />
+            <span className="absolute inset-x-0 bottom-0 h-1/3" style={{ background: "linear-gradient(180deg, rgba(15,20,17,0), rgba(15,20,17,0.85))" }} />
+            <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-3">
+              <div>
+                <div className="font-display text-[15px] font-bold">Layla Al Mansoori</div>
+                <div className="text-[12.5px] text-stone">@layla.makes, Dubai</div>
+              </div>
+              <Sticker accent="grass" rotate={0}><PointsCoin size={18} spin={false} /> +1,200 {t.common.pts}</Sticker>
             </div>
-
-            <Parallax speed={0.35} className="absolute -start-6 top-10 sm:-start-10">
-              <div className="anim-float" style={{ ["--rot" as string]: "-8deg" }}>
-                <Pack shape="bottle" accent="grass" label="Amla" sub="hair oil" size={78} />
-              </div>
-            </Parallax>
-            <Parallax speed={0.2} className="absolute -end-4 top-1/3 sm:-end-8">
-              <div className="anim-float-slow" style={{ ["--rot" as string]: "9deg" }}>
-                <Pack shape="jar" accent="sun" label="Honey" size={70} />
-              </div>
-            </Parallax>
-            <Parallax speed={0.5} className="absolute -bottom-6 start-1/4">
-              <div className="anim-float" style={{ ["--rot" as string]: "4deg", animationDelay: "1.2s" }}>
-                <Pack shape="tube" accent="sky" label="Herb'l" sub="neem" size={60} />
-              </div>
-            </Parallax>
-            <Parallax speed={0.28} className="absolute -top-5 end-10">
-              <Sticker accent="sun" rotate={6}>
-                <PointsCoin size={22} spin={false} /> +1,200 {t.common.pts}
-              </Sticker>
-            </Parallax>
-            <Parallax speed={0.15} className="absolute -bottom-3 -end-2">
-              <PointsCoin size={64} />
-            </Parallax>
-            <Leaf className="absolute -start-10 bottom-1/4 anim-wiggle" style={{ width: 54, transform: "rotate(-30deg)" }} color="var(--color-mint)" />
-          </motion.div>
-          <p className="mt-4 text-center text-[12px] text-stone lg:text-start">{lang === "ar" ? "رسوم ورقية مولّدة للنموذج" : "Paper-cut illustration, generated for the prototype"}</p>
-        </div>
+          </div>
+          <Parallax speed={0.3} className="absolute -start-8 top-8 hidden sm:block">
+            <div className="anim-float" style={{ ["--rot" as string]: "-8deg" }}>
+              <Pack shape="jar" accent="sun" label="Honey" size={64} />
+            </div>
+          </Parallax>
+          <Parallax speed={0.18} className="absolute -end-6 top-1/3 hidden sm:block">
+            <div className="anim-float-slow" style={{ ["--rot" as string]: "7deg" }}>
+              <Pack shape="tube" accent="sky" label="Herb'l" sub="neem" size={56} />
+            </div>
+          </Parallax>
+          <p className="mt-3 text-[12px] text-stone">{lang === "ar" ? "صورة مولّدة للنموذج" : "Photograph generated for the prototype"}</p>
+        </motion.div>
       </div>
+
+      <motion.dl {...rise(0.4)} className="container-x mt-16 grid grid-cols-3 gap-0 border-t border-line py-6 sm:mt-20">
+        {[
+          { v: s.creators.length, l: t.hero.stat1 },
+          { v: openBrands, l: t.hero.stat2 },
+          { v: released, l: t.hero.stat3 },
+        ].map((st, i) => (
+          <div key={st.l} className={i > 0 ? "border-s border-line ps-5 sm:ps-8" : ""}>
+            <dt className="sr-only">{st.l}</dt>
+            <dd className="font-display text-[clamp(1.8rem,3.4vw,2.8rem)] font-bold leading-none">
+              <Counter value={st.v} />
+            </dd>
+            <dd className="mt-2 text-[12.5px] text-stone sm:text-[13.5px]">{st.l}</dd>
+          </div>
+        ))}
+      </motion.dl>
     </section>
   );
 }

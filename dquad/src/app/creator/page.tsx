@@ -97,7 +97,7 @@ export default function CreatorHome() {
             </p>
           </div>
 
-          <div className="relative flex flex-wrap items-center gap-5 rounded-card border-2 border-ink bg-card p-5 sm:gap-8" style={{ boxShadow: "6px 6px 0 0 var(--color-ink)" }}>
+          <div className="relative flex flex-wrap items-center gap-5 rounded-card border border-line-strong bg-card p-5 sm:gap-8">
             <PointsCoin size={64} />
             <div>
               <div className="text-[12.5px] font-semibold text-stone">{t.creator.availablePts}</div>
@@ -137,8 +137,8 @@ export default function CreatorHome() {
       {next && (
         <Reveal amount={0.1}>
           <SectionTitle title={t.creator.nextBest} />
-          <Link href={next.href} className="card-lift group flex flex-col gap-4 rounded-card border-2 border-ink p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6" style={{ background: ACCENT[next.accent].softHex, boxShadow: "6px 6px 0 0 var(--color-ink)" }}>
-            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-ink" style={{ background: ACCENT[next.accent].hex, boxShadow: "3px 3px 0 0 var(--color-ink)" }} aria-hidden>
+          <Link href={next.href} className="card-lift group flex flex-col gap-4 rounded-card border border-line-strong p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6" style={{ background: ACCENT[next.accent].softHex }}>
+            <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border border-line-strong" style={{ background: ACCENT[next.accent].hex }} aria-hidden>
               <next.icon size={26} weight="fill" className="text-ink" />
             </span>
             <div className="min-w-0 flex-1">

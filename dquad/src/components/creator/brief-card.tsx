@@ -11,7 +11,7 @@ export function BriefCard({ campaign, accent = "grass" }: { campaign: Campaign; 
   return (
     <section className="card p-5 sm:p-6" aria-labelledby="brief-title">
       <div className="flex items-start gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-ink" style={{ background: a.hex }} aria-hidden>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-strong" style={{ background: a.hex }} aria-hidden>
           <Target size={22} weight="fill" className="text-ink" />
         </span>
         <div>

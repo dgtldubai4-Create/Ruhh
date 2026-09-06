@@ -9,7 +9,7 @@ import { fmtPoints } from "@/lib/format";
 export function Growth() {
   const { t } = useLang();
   return (
-    <section id="growth" className="container-x scroll-mt-24 py-20 sm:py-28" aria-labelledby="growth-title">
+    <section id="growth" className="container-x scroll-mt-24 py-24 sm:py-32" aria-labelledby="growth-title">
       <div className="grid items-center gap-10 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <Reveal>
@@ -36,7 +36,7 @@ export function Growth() {
         <div className="lg:col-span-7">
           <Reveal delay={0.1}>
             <div className="card-paper overflow-hidden">
-              <Art id="growthPlant" alt="Paper-cut plant growing from sprout to bloom to canopy" className="aspect-[16/9] w-full" fallback={<PaperScene accent="sun" />} />
+              <Art id="growthPlant" alt="Studio photograph of a creator at work" className="aspect-[16/9] w-full" fallback={<PaperScene accent="sun" shape="jar" label="Honey" />} />
             </div>
           </Reveal>
           <Reveal delay={0.2} className="mt-5">
@@ -62,7 +62,7 @@ function LedgerDemo() {
   const pending = released ? 0 : 1000;
   const available = released ? 1750 : 750;
   return (
-    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 rounded-card border-2 border-ink bg-card p-5 sm:gap-6" aria-live="polite">
+    <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 rounded-card border border-line bg-card p-5 sm:gap-6" aria-live="polite">
       <div>
         <div className="text-[12.5px] font-semibold text-stone">{t.growth.pending}</div>
         <motion.div key={`p${pending}`} initial={reduce ? false : { opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="font-display text-[34px] font-bold leading-none tabular">
@@ -70,7 +70,7 @@ function LedgerDemo() {
         </motion.div>
       </div>
       <div className="relative flex h-16 w-24 items-center justify-center" aria-hidden>
-        <span className="absolute inset-x-0 top-1/2 h-1 -translate-y-1/2 rounded-pill bg-paper-3" />
+        <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-line-strong" />
         <motion.span className="absolute" animate={reduce ? {} : { x: released ? 34 : -34 }} transition={{ duration: 0.9, ease: [0.34, 1.56, 0.64, 1] }}>
           <PointsCoin size={40} spin={!reduce} />
         </motion.span>

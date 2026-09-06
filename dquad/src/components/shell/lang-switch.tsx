@@ -11,7 +11,7 @@ export function LangSwitch({ className }: { className?: string }) {
           key={l}
           onClick={() => setLang(l)}
           aria-pressed={lang === l}
-          className={cx("rounded-pill px-3 py-1.5 text-[13px] font-semibold transition-colors", lang === l ? "bg-ink text-card" : "text-ink hover:bg-paper-2")}
+          className={cx("rounded-pill px-3 py-1.5 text-[13px] font-semibold transition-colors", lang === l ? "bg-ink text-paper" : "text-ink hover:bg-paper-2")}
           lang={l}
         >
           {l === "en" ? "EN" : "ع"}

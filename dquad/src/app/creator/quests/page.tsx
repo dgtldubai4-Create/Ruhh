@@ -62,7 +62,7 @@ export default function CreatorQuests() {
 
       <div className="mb-5 flex flex-wrap gap-1.5" role="tablist" aria-label="Quest type">
         {(["all", "education", "creative", "community"] as const).map((k) => (
-          <button key={k} role="tab" aria-selected={filter === k} onClick={() => setFilter(k)} className={cx("rounded-pill border-2 px-3.5 py-1.5 text-[13px] font-semibold transition-colors", filter === k ? "border-ink bg-ink text-card" : "border-line bg-card hover:bg-paper-2")}>
+          <button key={k} role="tab" aria-selected={filter === k} onClick={() => setFilter(k)} className={cx("rounded-pill border-2 px-3.5 py-1.5 text-[13px] font-semibold transition-colors", filter === k ? "border-ink bg-ink text-paper" : "border-line bg-card hover:bg-paper-2")}>
             {k === "all" ? t.common.all : KIND[k].label}
           </button>
         ))}
@@ -97,7 +97,7 @@ function QuestCard({ quest, participation, onOpen }: { quest: Quest; participati
   const StatusIcon = status === "completed" ? CheckCircle : status === "available" ? Plus : status === "joined" ? ListChecks : HourglassMedium;
 
   return (
-    <article className={cx("card-lift flex h-full flex-col overflow-hidden rounded-card border-2 border-ink bg-card", status === "completed" && "opacity-90")} style={{ boxShadow: "5px 5px 0 0 var(--color-ink)" }}>
+    <article className={cx("card-lift flex h-full flex-col overflow-hidden rounded-card border border-line-strong bg-card", status === "completed" && "opacity-90")}>
       <div className="relative h-[130px]" style={{ background: a.softHex }}>
         <span className="absolute -start-6 -bottom-10 h-32 w-32 rounded-full" style={{ background: a.hex, opacity: 0.45 }} aria-hidden />
         <div className="absolute end-6 top-3">
@@ -121,7 +121,7 @@ function QuestCard({ quest, participation, onOpen }: { quest: Quest; participati
         <ol className="flex flex-col gap-1 text-[13px]">
           {quest.steps.map((st, i) => (
             <li key={st} className="flex items-center gap-2">
-              <span className={cx("flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold", status === "completed" || (status !== "available" && i === 0) ? "bg-ink text-card" : "bg-paper-2 text-stone")} aria-hidden>
+              <span className={cx("flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold", status === "completed" || (status !== "available" && i === 0) ? "bg-ink text-paper" : "bg-paper-2 text-stone")} aria-hidden>
                 {status === "completed" ? <CheckCircle size={12} weight="fill" /> : i + 1}
               </span>
               {st}

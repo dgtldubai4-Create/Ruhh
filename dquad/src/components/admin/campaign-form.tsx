@@ -132,7 +132,7 @@ function CampaignFormBody({ campaign, onClose, onSaved }: { campaign?: Campaign;
               {products.map((p) => {
                 const on = d.productIds.includes(p.id);
                 return (
-                  <label key={p.id} className={cx("flex cursor-pointer items-center gap-3 rounded-input border-2 px-3 py-2 text-[14px] transition-colors", on ? "border-ink bg-card" : "border-line bg-card hover:bg-paper-2")}>
+                  <label key={p.id} className={cx("flex cursor-pointer items-center gap-3 rounded-input border-2 px-3 py-2 text-[14px] transition-colors", on ? "border-line-strong bg-card" : "border-line bg-card hover:bg-paper-2")}>
                     <input type="checkbox" className="h-4 w-4 accent-[var(--color-grass)]" checked={on} onChange={(e) => set("productIds", e.target.checked ? [...d.productIds, p.id] : d.productIds.filter((x) => x !== p.id))} />
                     <span className="flex-1">{p.name}</span>
                     <span className="text-[12px] text-stone">{p.type}</span>
@@ -150,7 +150,7 @@ function CampaignFormBody({ campaign, onClose, onSaved }: { campaign?: Campaign;
             {MARKETS.map((m) => {
               const on = d.markets.includes(m);
               return (
-                <label key={m} className={cx("flex cursor-pointer items-center gap-2 rounded-pill border-2 px-4 py-2 text-[14px] font-semibold transition-colors", on ? "border-ink bg-ink text-card" : "border-line bg-card hover:bg-paper-2")}>
+                <label key={m} className={cx("flex cursor-pointer items-center gap-2 rounded-pill border-2 px-4 py-2 text-[14px] font-semibold transition-colors", on ? "border-ink bg-ink text-paper" : "border-line bg-card hover:bg-paper-2")}>
                   <input type="checkbox" className="sr-only" checked={on} onChange={(e) => set("markets", e.target.checked ? [...d.markets, m] : d.markets.filter((x) => x !== m))} />
                   {m}
                 </label>

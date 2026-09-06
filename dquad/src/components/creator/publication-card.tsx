@@ -38,7 +38,7 @@ export function PublishForm({ campaign, creator }: { campaign: Campaign; creator
   return (
     <section className="card-paper p-5 sm:p-6" aria-labelledby="publish-title">
       <div className="flex items-start gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-ink bg-grass-soft" aria-hidden>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-strong bg-grass-soft" aria-hidden>
           <LinkSimple size={22} weight="bold" className="text-ink" />
         </span>
         <div>
@@ -71,7 +71,7 @@ export function PublishForm({ campaign, creator }: { campaign: Campaign; creator
                     setPlatform(p);
                     if (error) setError(null);
                   }}
-                  className={cx("inline-flex items-center gap-1.5 rounded-pill border-2 px-3 py-1.5 text-[13px] font-semibold transition-colors", on ? "border-ink bg-ink text-card" : "border-line bg-card text-ink hover:bg-paper-2")}
+                  className={cx("inline-flex items-center gap-1.5 rounded-pill border-2 px-3 py-1.5 text-[13px] font-semibold transition-colors", on ? "border-ink bg-ink text-paper" : "border-line bg-card text-ink hover:bg-paper-2")}
                 >
                   <Icon size={16} weight="fill" /> {PLATFORM_LABEL[p]}
                 </button>
@@ -132,7 +132,7 @@ export function PublicationCard({ publication, campaign, ledger, burst }: { publ
     <section className="relative card p-5 sm:p-6" aria-labelledby="pub-title">
       <PaperBurst trigger={burst} />
       <div className="flex flex-wrap items-start gap-3">
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink text-card" aria-hidden>
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink text-paper" aria-hidden>
           <Icon size={22} weight="fill" />
         </span>
         <div className="min-w-0 flex-1">

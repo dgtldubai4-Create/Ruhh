@@ -34,7 +34,7 @@ export function CampaignCard({ s, campaign, creatorId, onAccept, onDecline, clas
   const href = `/creator/campaigns/${campaign.id}`;
 
   return (
-    <article className={cx("card-lift flex h-full flex-col overflow-hidden rounded-card border-2 border-ink bg-card", className)} style={{ boxShadow: "5px 5px 0 0 var(--color-ink)" }}>
+    <article className={cx("card-lift flex h-full flex-col overflow-hidden rounded-card border border-line-strong bg-card", className)}>
       <Link href={href} className="relative block h-[150px] overflow-hidden" style={{ background: a.softHex }} aria-label={`${campaign.title}, open`}>
         <span className="absolute -end-8 -top-10 h-36 w-36 rounded-full" style={{ background: a.hex, opacity: 0.55 }} aria-hidden />
         <div className="absolute start-6 top-4">

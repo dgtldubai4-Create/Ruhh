@@ -12,7 +12,7 @@ const TONES: Accent[] = ["coral", "sky", "sun", "mint", "berry", "amber"];
 export function HowItWorks() {
   const { t } = useLang();
   return (
-    <section id="how" className="scroll-mt-24 bg-paper-2 py-20 sm:py-28" aria-labelledby="how-title">
+    <section id="how" className="scroll-mt-24 border-y border-line bg-paper-2 py-24 sm:py-32" aria-labelledby="how-title">
       <div className="container-x">
         <Reveal>
           <h2 id="how-title" className="display-lg max-w-[16ch] text-balance">
@@ -21,18 +21,18 @@ export function HowItWorks() {
         </Reveal>
       </div>
       <div className="relative mt-12">
-        <span className="pointer-events-none absolute inset-x-0 top-[52px] hidden h-1 bg-ink/15 lg:block" aria-hidden />
+        <span className="pointer-events-none absolute inset-x-0 top-[52px] hidden h-px bg-line-strong lg:block" aria-hidden />
         <Stagger as="ol" className="rail container-x flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 lg:grid lg:grid-cols-6 lg:overflow-visible">
           {t.how.steps.map((step, i) => {
             const Icon = ICONS[i];
             const a = ACCENT[TONES[i]];
             return (
               <StaggerItem key={step.t} as="li" className="w-[260px] shrink-0 snap-start lg:w-auto">
-                <div className="relative flex h-full flex-col rounded-card border-2 border-ink bg-card p-5 pt-24">
-                  <span className="absolute start-5 top-5 flex h-14 w-14 items-center justify-center rounded-full border-2 border-ink" style={{ background: a.hex, boxShadow: "3px 3px 0 0 var(--color-ink)" }} aria-hidden>
-                    <Icon size={26} weight="fill" className="text-ink" />
+                <div className="relative flex h-full flex-col rounded-card border border-line bg-card p-5 pt-24">
+                  <span className="absolute start-5 top-5 flex h-14 w-14 items-center justify-center rounded-full" style={{ background: a.softHex, color: a.hex }} aria-hidden>
+                    <Icon size={26} weight="fill" />
                   </span>
-                  <span className="absolute end-5 top-5 font-display text-[44px] font-bold leading-none text-ink/10" aria-hidden>
+                  <span className="absolute end-5 top-5 font-display text-[44px] font-bold leading-none text-ink/8" aria-hidden>
                     {i + 1}
                   </span>
                   <h3 className="display-sm mt-2">{step.t}</h3>

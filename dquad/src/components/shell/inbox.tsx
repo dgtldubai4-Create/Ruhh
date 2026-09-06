@@ -54,7 +54,7 @@ export function InboxButton({ audience }: { audience: "creator" | "admin" }) {
                     markNotificationRead(n.id);
                     setOpen(false);
                   }}
-                  className={cx("block rounded-card border px-4 py-3 transition-colors hover:bg-paper-2", n.read ? "border-line bg-card" : "border-ink bg-card")}
+                  className={cx("block rounded-card border px-4 py-3 transition-colors hover:bg-paper-2", n.read ? "border-line bg-card" : "border-line-strong bg-card")}
                 >
                   <div className="flex items-center gap-2 text-[11.5px] font-semibold uppercase tracking-wide text-stone">
                     {n.channel === "email" ? <EnvelopeSimple size={14} weight="bold" /> : <ChatCircleDots size={14} weight="bold" />}

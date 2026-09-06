@@ -104,11 +104,11 @@ export function ReviewRow({ s, sub, open, onToggle }: { s: AppState; sub: Submis
       <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
         {/* placeholder player */}
         <div>
-          <div className="relative mx-auto aspect-[9/16] w-full max-w-[220px] overflow-hidden rounded-[22px] border-2 border-ink bg-paper-2" style={{ boxShadow: "5px 5px 0 0 var(--color-ink)" }} role="img" aria-label={`Placeholder player for ${sub.fileName}`}>
+          <div className="relative mx-auto aspect-[9/16] w-full max-w-[220px] overflow-hidden rounded-[22px] border border-line-strong bg-paper-2" role="img" aria-label={`Placeholder player for ${sub.fileName}`}>
             <span className="absolute inset-x-6 top-8 h-2/5 rounded-[40%_60%_50%_50%/50%_50%_50%_50%]" style={{ background: ACCENT[accent].softHex }} aria-hidden />
             <span className="absolute -bottom-6 -start-6 h-1/3 w-3/4 rounded-[50%] bg-grass-soft" aria-hidden />
             <span className="absolute inset-0 flex items-center justify-center" aria-hidden>
-              <span className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-ink bg-card">
+              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-line-strong bg-card">
                 <Play size={28} weight="fill" className="ms-1 text-ink" />
               </span>
             </span>
@@ -166,7 +166,7 @@ export function ReviewRow({ s, sub, open, onToggle }: { s: AppState; sub: Submis
             ) : (
               <ol className="flex flex-col gap-2">
                 {sub.comments.map((cm) => (
-                  <li key={cm.id} className={cx("max-w-[60ch] rounded-card border px-4 py-3", cm.role === "reviewer" ? "ms-0 border-ink bg-card" : "ms-6 border-line bg-paper-2")}>
+                  <li key={cm.id} className={cx("max-w-[60ch] rounded-card border px-4 py-3", cm.role === "reviewer" ? "ms-0 border-line-strong bg-card" : "ms-6 border-line bg-paper-2")}>
                     <div className="flex flex-wrap items-center gap-x-2 text-[12px] text-stone">
                       <span className="font-semibold text-ink">{cm.author}</span>
                       <Tag outline>{cm.role === "reviewer" ? "Reviewer" : "Creator"}</Tag>

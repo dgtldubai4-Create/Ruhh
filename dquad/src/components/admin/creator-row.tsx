@@ -110,7 +110,7 @@ export function CreatorRow({ s, c, open, onToggle, campaign, match, campaignOpti
       actions={
         <button
           type="button"
-          className={cx("inline-flex h-9 w-9 items-center justify-center rounded-pill border transition-colors", c.shortlisted ? "border-ink bg-sun text-ink" : "border-line bg-card text-stone hover:bg-paper-2")}
+          className={cx("inline-flex h-9 w-9 items-center justify-center rounded-pill border transition-colors", c.shortlisted ? "border-ink bg-sun text-paper" : "border-line bg-card text-stone hover:bg-paper-2")}
           aria-pressed={!!c.shortlisted}
           aria-label={c.shortlisted ? `Remove ${c.name} from the shortlist` : `Shortlist ${c.name}`}
           onClick={() => {
@@ -215,7 +215,7 @@ export function CreatorRow({ s, c, open, onToggle, campaign, match, campaignOpti
                     aria-pressed={c.verification === v}
                     disabled={busy === v}
                     onClick={() => verify(v)}
-                    className={cx("rounded-pill border px-3 py-1.5 text-[13px] font-semibold transition-colors", c.verification === v ? "border-ink bg-ink text-card" : "border-line bg-card hover:bg-paper-3")}
+                    className={cx("rounded-pill border px-3 py-1.5 text-[13px] font-semibold transition-colors", c.verification === v ? "border-ink bg-ink text-paper" : "border-line bg-card hover:bg-paper-3")}
                   >
                     {VERIFICATION_LABEL[v]}
                   </button>

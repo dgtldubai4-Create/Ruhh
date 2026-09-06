@@ -115,7 +115,7 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
         {Back}
         {/* Header */}
         <Reveal y={12} amount={0.05}>
-          <div className="relative overflow-hidden rounded-card border-2 border-ink" style={{ background: a.softHex, boxShadow: "6px 6px 0 0 var(--color-ink)" }}>
+          <div className="relative overflow-hidden rounded-card border border-line-strong" style={{ background: a.softHex }}>
             <span className="absolute -end-16 -top-16 h-56 w-56 rounded-full" style={{ background: a.hex, opacity: 0.5 }} aria-hidden />
             <div className="relative grid gap-5 p-5 sm:p-7 md:grid-cols-[1fr_auto] md:items-end">
               <div>
@@ -236,7 +236,7 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
               <Reveal y={12} amount={0.05}>
                 <section className="card p-5 sm:p-6" aria-labelledby="upload-title">
                   <div className="flex items-start gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border-2 border-ink" style={{ background: a.hex }} aria-hidden>
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line-strong" style={{ background: a.hex }} aria-hidden>
                       <UploadSimple size={22} weight="bold" className="text-ink" />
                     </span>
                     <div className="flex-1">
@@ -258,7 +258,7 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
 
                   <AnimatePresence initial={false}>
                     {revealId && j.latest && j.latest.id === revealId && !analysing && (
-                      <motion.div key={revealId} initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }} className="mt-6 rounded-card border-2 border-ink p-5">
+                      <motion.div key={revealId} initial={reduce ? { opacity: 0 } : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }} className="mt-6 rounded-card border border-line-strong p-5">
                         <ScoreBreakdown submission={j.latest} criteria={criteria} accent={accent} />
                       </motion.div>
                     )}
@@ -292,7 +292,7 @@ export default function CampaignPage({ params }: { params: Promise<{ id: string 
                     {j.submissions.length > 1 && (
                       <div className="mt-4 flex flex-wrap gap-1.5" role="tablist" aria-label="Versions">
                         {j.submissions.map((sub) => (
-                          <button key={sub.id} role="tab" aria-selected={sub.id === selected.id} onClick={() => setSelectedId(sub.id)} className={cx("rounded-pill border-2 px-3 py-1 text-[12.5px] font-semibold transition-colors", sub.id === selected.id ? "border-ink bg-ink text-card" : "border-line bg-card hover:bg-paper-2")}>
+                          <button key={sub.id} role="tab" aria-selected={sub.id === selected.id} onClick={() => setSelectedId(sub.id)} className={cx("rounded-pill border-2 px-3 py-1 text-[12.5px] font-semibold transition-colors", sub.id === selected.id ? "border-ink bg-ink text-paper" : "border-line bg-card hover:bg-paper-2")}>
                             v{sub.version}
                           </button>
                         ))}
