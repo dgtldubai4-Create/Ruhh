@@ -7,15 +7,6 @@ export function WhatsAppIcon({ size = 17 }: { size?: number }) {
   );
 }
 
-export function HeartLogo({ className = "h-[18px] w-[18px]" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className={className}>
-      <path d="M12 21c-4-3-7-6.2-7-10A5 5 0 0112 6a5 5 0 017 5c0 3.8-3 7-7 10z" />
-      <path d="M12 9.5v6" />
-    </svg>
-  );
-}
-
 export function InstagramIcon({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">

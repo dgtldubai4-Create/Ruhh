@@ -6,5 +6,5 @@ import Image, { type ImageProps } from "next/image";
  */
 export function Photo(props: ImageProps) {
   const src = typeof props.src === "string" ? props.src : "";
-  return <Image {...props} alt={props.alt} unoptimized={src.startsWith("data:")} />;
+  return <Image {...props} alt={props.alt} unoptimized={src.startsWith("data:") || src.endsWith(".svg")} />;
 }

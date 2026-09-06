@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { HeartLogo } from "@/components/icons";
+import { Monogram } from "@/components/brand-logo";
 import { getAdminSession } from "@/lib/auth";
 import { sendMagicLink } from "@/app/admin/actions";
 
@@ -13,9 +13,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
     <div className="flex min-h-screen items-center justify-center bg-cream p-5">
       <div className="card w-full max-w-[380px] p-7">
         <div className="mb-5 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-deep">
-            <HeartLogo />
-          </div>
+          <Monogram size={44} />
           <div>
             <div className="text-[16px] font-bold text-rose-deep">Ruhh — Admin</div>
             <div className="text-[11px] text-muted">Sign in with a magic link</div>

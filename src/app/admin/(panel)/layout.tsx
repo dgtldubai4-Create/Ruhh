@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeartLogo } from "@/components/icons";
+import { Monogram } from "@/components/brand-logo";
 import { AdminNav } from "@/components/admin/admin-nav";
 import { requireAdmin } from "@/lib/auth";
 
@@ -12,9 +12,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div className="min-h-screen bg-cream">
       <header className="sticky top-0 z-40 flex items-center justify-between gap-3 border-b-[1.5px] border-line bg-white px-4 py-2.5">
         <Link href="/admin" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-rose-deep">
-            <HeartLogo />
-          </div>
+          <Monogram size={40} />
           <div>
             <div className="text-[15px] font-bold text-rose-deep">Ruhh — Admin</div>
             <div className="text-[10px] text-muted">{session.email}</div>

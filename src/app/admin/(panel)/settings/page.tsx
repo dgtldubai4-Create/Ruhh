@@ -140,7 +140,7 @@ export default async function SettingsPage({ searchParams }: { searchParams: Pro
               <button className="w-full text-[12px] text-muted hover:text-danger">Remove logo</button>
             </form>
           )}
-          <p className="mt-2 text-[11px] text-muted">Square PNG with transparent background looks best. Replaces the heart icon in the header.</p>
+          <p className="mt-2 text-[11px] text-muted">Optional. The Ruhh wordmark ships with the app; upload a file here only to replace it in the header.</p>
 
           <div className="mt-5 border-t border-line pt-4">
             <div className="label">Photo hosting</div>
