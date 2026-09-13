@@ -112,7 +112,7 @@ export function TrackOrder({ settings }: { settings: Settings }) {
                   <span>
                     {i.qty}× {i.item_name}
                     {i.size_label ? ` (${i.size_label})` : ""}
-                    {i.flavour_text ? ` — ${i.flavour_text}` : ""}
+                    {i.flavour_text ? `, ${i.flavour_text}` : ""}
                   </span>
                   <span>{aed(i.line_total)}</span>
                 </li>
@@ -167,7 +167,7 @@ export function TrackOrder({ settings }: { settings: Settings }) {
 
           <div className="mb-4 rounded-[10px] bg-peach p-3 text-[12px] leading-[1.6] text-peach-deep">
             {order.status === "delivered"
-              ? "Delivered — hope you enjoyed it! ❤️"
+              ? "Delivered. Hope you enjoyed it!"
               : order.status === "pending"
                 ? `${settings.owner_name} has received your order and will confirm on WhatsApp shortly.`
                 : `${settings.owner_name} is on it. You'll get a WhatsApp message with each update.`}

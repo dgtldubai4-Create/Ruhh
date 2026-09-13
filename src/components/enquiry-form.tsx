@@ -58,7 +58,7 @@ export function EnquiryForm({ settings }: { settings: Settings }) {
   }
 
   function waText() {
-    return `Hi ${settings.owner_name}! I'd like a custom cake.\n\nOccasion: ${form.occasion}\nDate: ${form.eventDate || "flexible"}\nServings: ${form.servings || "—"}\nBudget: ${form.budget ? "AED " + form.budget : "—"}\n\n${form.description}\n\n— ${form.name} (${form.phone})`;
+    return `Hi ${settings.owner_name}! I'd like a custom cake.\n\nOccasion: ${form.occasion}\nDate: ${form.eventDate || "flexible"}\nServings: ${form.servings || "-"}\nBudget: ${form.budget ? "AED " + form.budget : "-"}\n\n${form.description}\n\n${form.name} (${form.phone})`;
   }
 
   if (done) {

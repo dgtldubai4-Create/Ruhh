@@ -25,7 +25,7 @@ create table settings (
   business_name text not null default 'Ruhh',
   tagline text not null default 'Baked to perfection · est. 2019',
   owner_name text not null default 'Shweta',
-  about_text text not null default 'Ruhh means soul — and that''s what Shweta puts into every recipe. Baking from the heart since 2019, made slowly and from scratch.',
+  about_text text not null default 'Ruhh means soul, and that is what Shweta puts into every recipe. Baking from the heart since 2019, made slowly and from scratch.',
   whatsapp_number text not null default '',
   instagram_handle text,
   pickup_address text,

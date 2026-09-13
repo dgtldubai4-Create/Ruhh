@@ -26,7 +26,7 @@ export default async function ReviewsPage() {
         </div>
       )}
       <div className="mb-6 grid gap-2.5">
-        {reviews.length === 0 && <p className="text-[12px] text-muted">No reviews yet — be the first.</p>}
+        {reviews.length === 0 && <p className="text-[12px] text-muted">No reviews yet. Be the first.</p>}
         {reviews.map((r) => (
           <div key={r.id} className="card p-4">
             <div className="mb-1 flex items-center justify-between">

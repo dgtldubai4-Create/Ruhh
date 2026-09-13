@@ -101,7 +101,7 @@ export function statusMessage(o: Order, status: OrderStatus, businessName: strin
   const lines: Record<OrderStatus, string> = {
     pending: `We've received your order ${o.ref}. We'll confirm shortly.`,
     confirmed: `Your order ${o.ref} is confirmed for ${o.slot_date}, ${o.slot_label}. Thank you!`,
-    baking: `Good news — your order ${o.ref} is in the oven right now.`,
+    baking: `Good news: your order ${o.ref} is in the oven right now.`,
     out_for_delivery: `Your order ${o.ref} is on its way to you.`,
     ready_for_pickup: `Your order ${o.ref} is ready for pickup.`,
     delivered: `Your order ${o.ref} has been delivered. Enjoy, and thank you for choosing ${businessName}!`,

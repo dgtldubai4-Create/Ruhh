@@ -277,7 +277,7 @@ export function buildCustomerWhatsAppMessage(o: Order, settings: Settings) {
   msg += o.mode === "delivery" ? `Delivery to: ${o.address}\nArea: ${o.zone_name}\n` : `Pickup\n`;
   msg += `When: ${when}\n\n*Items:*\n${items}\n\nSubtotal: AED ${Number(o.subtotal)}\nDelivery: ${Number(o.delivery_fee) ? "AED " + Number(o.delivery_fee) : "Free"}\n*Total: AED ${Number(o.total)}*\nPayment: ${o.payment_method === "cash" ? "Cash" : "Bank transfer"}\n`;
   if (settings.tax_note) msg += `${settings.tax_note}\n`;
-  if (o.is_gift) msg += `\n🎁 Gift for: ${o.gift_recipient || "—"}\nCard message: ${o.gift_message || "—"}\n`;
+  if (o.is_gift) msg += `\n🎁 Gift for: ${o.gift_recipient || "-"}\nCard message: ${o.gift_message || "-"}\n`;
   if (o.notes) msg += `\nSpecial requests: ${o.notes}\n`;
   msg += `\nPlease confirm. Thank you!`;
   return msg;

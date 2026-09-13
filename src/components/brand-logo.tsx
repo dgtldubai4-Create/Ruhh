@@ -8,7 +8,7 @@ export function BrandLogo({ url, height = 44 }: { url: string | null; height?: n
   if (url) {
     return <Photo src={url} alt="Ruhh" width={height * 3} height={height} className="w-auto object-contain" style={{ height }} priority />;
   }
-  return <Photo src="/brand/ruhh-lockup.svg" alt="Ruhh — baked to perfection, est. 2019" width={Math.round(height * 3.4)} height={height} style={{ height, width: "auto" }} priority />;
+  return <Photo src="/brand/ruhh-lockup.svg" alt="Ruhh. Baked to perfection, est. 2019" width={Math.round(height * 3.4)} height={height} style={{ height, width: "auto" }} priority />;
 }
 
 export function Monogram({ size = 36 }: { size?: number }) {

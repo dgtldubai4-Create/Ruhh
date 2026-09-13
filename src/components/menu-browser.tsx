@@ -93,7 +93,7 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
         <div key={`${cat}-${q}`} className="m-stagger mb-24 grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-3">
           {list.map((m, i) => {
             const multi = m.item_sizes.length > 1;
-            const flav = m.item_flavours.slice(0, 3).map((f) => f.name).join(" · ") + (m.item_flavours.length > 3 ? " …" : "");
+            const flav = m.item_flavours.slice(0, 3).map((f) => f.name).join(" · ") + (m.item_flavours.length > 3 ? "…" : "");
             return (
               <div
                 key={m.id}

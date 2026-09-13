@@ -45,7 +45,7 @@ export function SiteShell({ settings, children }: { settings: Settings; children
             </Link>
           </div>
           <div>
-            © {new Date().getFullYear()} {settings.business_name} · Home baked in Dubai
+            © {new Date().getFullYear()} {settings.business_name}. Home baked in Dubai.
           </div>
         </footer>
       </div>

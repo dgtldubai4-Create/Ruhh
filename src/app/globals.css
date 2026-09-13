@@ -20,7 +20,7 @@
   --color-line: rgba(155, 75, 107, 0.13);
   --color-danger: #b23a48;
   --color-rose-clay: #b8707c;
-  --font-serif: Georgia, "Times New Roman", serif;
+  --font-serif: "DM Sans", "Helvetica Neue", Arial, sans-serif;
   --radius-card: 16px;
   --radius-sm: 10px;
 }
@@ -50,7 +50,8 @@ body {
     @apply rounded-[16px] border border-line bg-white;
   }
   .sec-head {
-    @apply mb-3.5 flex items-center gap-2.5 text-[13px] uppercase tracking-[1.5px] text-muted;
+    @apply mb-3.5 flex items-center gap-3 text-[19px] leading-tight text-ink;
+    font-family: var(--font-display);
   }
   .sec-head::after {
     content: "";
@@ -65,7 +66,7 @@ body {
     @apply border-danger;
   }
   .label {
-    @apply mb-1 block text-[11px] uppercase tracking-wider text-muted;
+    @apply mb-1 block text-[11.5px] font-medium text-muted;
   }
   .tag {
     @apply inline-block rounded-full px-2 py-0.5 text-[10px] font-bold;
@@ -91,14 +92,14 @@ body {
 
 /* ---------- display type ---------- */
 @theme {
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
 }
 h1,
 h2,
 h3,
 .font-display {
   font-family: var(--font-display);
-  font-variation-settings: "opsz" 40;
+  font-weight: 500;
 }
 
 /* ---------- motion system ----------

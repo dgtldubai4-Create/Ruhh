@@ -15,7 +15,7 @@ export default async function CustomCakesPage() {
           Custom cakes for <span className="italic text-rose-deep">your moments</span>
         </h1>
         <p className="text-[13px] leading-[1.7] text-muted">
-          Birthdays, anniversaries, baby showers, office parties. Tell {settings.owner_name} what you have in mind and she&apos;ll reply on WhatsApp with a quote.
+          Birthdays, anniversaries, baby showers, office parties. Tell {settings.owner_name} what you have in mind and she will reply on WhatsApp with a quote.
           Custom cakes need at least 48 hours notice.
         </p>
       </section>

@@ -159,7 +159,7 @@ export function ItemPicker({
 
         <div key={unit * qty} className="m-pop font-display mb-3 text-center text-[22px] font-bold text-rose-deep">{aed(unit * qty)}</div>
         <button className="btn-p press w-full rounded-[10px] py-3" disabled={blocked} onClick={confirm}>
-          {unit <= 0 ? "Price on request — ask on WhatsApp" : mixMode && remaining > 0 ? `Choose ${remaining} more` : "Add to cart"}
+          {unit <= 0 ? "Price on request. Ask on WhatsApp" : mixMode && remaining > 0 ? `Choose ${remaining} more` : "Add to cart"}
         </button>
       </div>
     </div>

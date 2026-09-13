@@ -28,7 +28,12 @@ export function Reveal({ children, className = "", delay = 0 }: { children: Reac
       { rootMargin: "0px 0px -8% 0px", threshold: 0.05 },
     );
     io.observe(el);
-    return () => io.disconnect();
+    // Safety net: never leave content hidden if the observer never fires.
+    const t = setTimeout(() => setState("shown"), 2500);
+    return () => {
+      io.disconnect();
+      clearTimeout(t);
+    };
   }, []);
 
   return (

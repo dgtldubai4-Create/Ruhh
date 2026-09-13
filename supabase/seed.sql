@@ -107,7 +107,7 @@ select seed_item('Tea Cakes', 'Flourless Chocolate Cake', 'Dense, gluten-free ch
 drop function seed_item(text, text, text, text, boolean, int, jsonb, text[], boolean);
 
 insert into specials (name, description, emoji, price_aed, tag, accent, sort_order) values
-  ('Classic Tiramisu', 'Our signature 500g tiramisu — espresso-soaked layers and mascarpone cream.', '☕', 85, 'Bestseller', 'lav', 1),
+  ('Classic Tiramisu', 'Our signature 500g tiramisu: espresso-soaked layers and mascarpone cream.', '☕', 85, 'Bestseller', 'lav', 1),
   ('Biscoff Cheesecake', 'Creamy Biscoff cheesecake, 500g. A weekend favourite.', '🍰', 85, 'Popular', 'peach', 2);
 
 -- Photos generated for launch (replace from Admin → Menu as real photography comes in)

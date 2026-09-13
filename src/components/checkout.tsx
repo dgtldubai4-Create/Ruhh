@@ -138,8 +138,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
         </div>
         <h2 className="m-fade-up m-delay-1 mb-1 text-[22px] font-bold">Order {o.ref} placed!</h2>
         <p className="mb-1 text-[13px] leading-[1.6] text-muted">
-          {settings.owner_name} has your order for {fmtDate(o.slot_date)}, {o.slot_label}. WhatsApp should have opened with the details ready to send.
-          If it didn&apos;t, tap the button below.
+          {settings.owner_name} has your order for {fmtDate(o.slot_date)}, {o.slot_label}. WhatsApp should have opened with the details ready to send. If it did not, tap the button below.
         </p>
         {o.payment_method === "bank_transfer" && settings.bank_details && (
           <div className="mx-auto my-3 max-w-[380px] rounded-[10px] bg-white p-3 text-left text-[12px] leading-[1.6] text-ink">
@@ -217,7 +216,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
         ))}
         <div className="flex justify-between py-0.5">
           <span>Delivery</span>
-          <span>{mode === "pickup" ? "Free (pickup)" : deliveryFee ? aed(deliveryFee) : zone ? "Free" : "—"}</span>
+          <span>{mode === "pickup" ? "Free (pickup)" : deliveryFee ? aed(deliveryFee) : zone ? "Free" : "-"}</span>
         </div>
         <div className="mt-1 flex justify-between border-t border-line pt-2 text-[14px] font-bold text-rose-deep">
           <span>Total</span>
@@ -251,7 +250,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
             <select className={`field ${errors.zone ? "field-err" : ""}`} value={zoneId} onChange={(e) => setZoneId(e.target.value)}>
               {zones.map((z) => (
                 <option key={z.id} value={z.id}>
-                  {z.name} — {aed(z.fee_aed)}
+                  {z.name}: {aed(z.fee_aed)}
                   {z.min_order_aed ? ` (min ${aed(z.min_order_aed)})` : ""}
                 </option>
               ))}

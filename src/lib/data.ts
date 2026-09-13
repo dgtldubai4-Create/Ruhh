@@ -8,7 +8,7 @@ const DEFAULT_SETTINGS: Settings = {
   tagline: "Baked to perfection · est. 2019",
   owner_name: "Shweta",
   about_text:
-    "Ruhh means soul — and that's what Shweta puts into every recipe. Baking from the heart since 2019, made slowly and from scratch.",
+    "Ruhh means soul, and that is what Shweta puts into every recipe. Baking from the heart since 2019, made slowly and from scratch.",
   whatsapp_number: "",
   instagram_handle: null,
   pickup_address: null,
