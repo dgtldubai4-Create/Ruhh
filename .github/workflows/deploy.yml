@@ -1,7 +1,8 @@
 name: Deploy to Vercel
 
-# Deploys from GitHub Actions so no local Vercel login is needed.
-# Runs on every push to main and on demand from the Actions tab.
+# Manual fallback deploy from GitHub Actions (Actions tab → Run workflow).
+# Not needed when the repository is connected to Vercel through the dashboard,
+# which deploys every push on its own.
 #
 # Required repository secret:
 #   VERCEL_TOKEN                 Vercel → Account Settings → Tokens
@@ -14,8 +15,6 @@ name: Deploy to Vercel
 #   WHATSAPP_ORDER_TEMPLATE, WHATSAPP_STATUS_TEMPLATE, WHATSAPP_OWNER_ALERT_NUMBER
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       target:

@@ -77,8 +77,8 @@ through the server with the service-role key.
 
 ## 2. Deploy to Vercel
 
-There is also a GitHub Actions workflow, `.github/workflows/deploy.yml`, that
-deploys on every push to `main` or on demand. It needs a `VERCEL_TOKEN`
+There is also a manual GitHub Actions workflow, `.github/workflows/deploy.yml`,
+for deploying without the dashboard integration. It needs a `VERCEL_TOKEN`
 repository secret and reads the app variables from secrets of the same names;
 see `docs/DEPLOY_CHECKLIST.md` section 2A.
 
