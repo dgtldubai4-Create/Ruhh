@@ -19,6 +19,7 @@
   --color-muted: #7a5050;
   --color-line: rgba(155, 75, 107, 0.13);
   --color-danger: #b23a48;
+  --color-rose-clay: #b8707c;
   --font-serif: Georgia, "Times New Roman", serif;
   --radius-card: 16px;
   --radius-sm: 10px;
@@ -335,8 +336,8 @@ h3,
   }
 }
 .hero-photo {
-  animation: ken-burns 18s ease-out both;
-  transform-origin: 60% 40%;
+  animation: ken-burns 22s ease-out both;
+  transform-origin: 55% 45%;
   will-change: transform;
 }
 @keyframes word-in {
