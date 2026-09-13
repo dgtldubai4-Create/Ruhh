@@ -1,0 +1,118 @@
+name: Deploy to Vercel
+
+# Manual fallback deploy from GitHub Actions (Actions tab → Run workflow).
+# Not needed when the repository is connected to Vercel through the dashboard,
+# which deploys every push on its own.
+#
+# Required repository secret:
+#   VERCEL_TOKEN                 Vercel → Account Settings → Tokens
+# Optional secrets (passed to the deployment as environment variables):
+#   VERCEL_SCOPE                 team slug, only if the project should live in a team
+#   NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY
+#   NEXT_PUBLIC_SITE_URL, ADMIN_EMAILS, CRON_SECRET
+#   RESEND_API_KEY, EMAIL_FROM, ORDER_ALERT_EMAIL
+#   WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_VERIFY_TOKEN, WHATSAPP_APP_SECRET,
+#   WHATSAPP_ORDER_TEMPLATE, WHATSAPP_STATUS_TEMPLATE, WHATSAPP_OWNER_ALERT_NUMBER
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "production or preview"
+        default: production
+        required: true
+
+concurrency:
+  group: vercel-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_SCOPE: ${{ secrets.VERCEL_SCOPE }}
+      VERCEL_PROJECT: ruhh
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for the Vercel token
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error title=Missing VERCEL_TOKEN::Create a token at https://vercel.com/account/tokens and add it as a repository secret named VERCEL_TOKEN (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint, typecheck, test
+        run: npm run check
+
+      - name: Link the Vercel project (creates it on first run)
+        run: |
+          SCOPE_ARG=""
+          if [ -n "$VERCEL_SCOPE" ]; then SCOPE_ARG="--scope $VERCEL_SCOPE"; fi
+          npx vercel link --yes --project "$VERCEL_PROJECT" --token "$VERCEL_TOKEN" $SCOPE_ARG
+
+      - name: Deploy
+        id: deploy
+        env:
+          TARGET: ${{ github.event.inputs.target || 'production' }}
+          S_NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          S_NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          S_SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          S_NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          S_ADMIN_EMAILS: ${{ secrets.ADMIN_EMAILS }}
+          S_CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          S_RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          S_EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          S_ORDER_ALERT_EMAIL: ${{ secrets.ORDER_ALERT_EMAIL }}
+          S_WHATSAPP_ACCESS_TOKEN: ${{ secrets.WHATSAPP_ACCESS_TOKEN }}
+          S_WHATSAPP_PHONE_NUMBER_ID: ${{ secrets.WHATSAPP_PHONE_NUMBER_ID }}
+          S_WHATSAPP_VERIFY_TOKEN: ${{ secrets.WHATSAPP_VERIFY_TOKEN }}
+          S_WHATSAPP_APP_SECRET: ${{ secrets.WHATSAPP_APP_SECRET }}
+          S_WHATSAPP_ORDER_TEMPLATE: ${{ secrets.WHATSAPP_ORDER_TEMPLATE }}
+          S_WHATSAPP_STATUS_TEMPLATE: ${{ secrets.WHATSAPP_STATUS_TEMPLATE }}
+          S_WHATSAPP_OWNER_ALERT_NUMBER: ${{ secrets.WHATSAPP_OWNER_ALERT_NUMBER }}
+        run: |
+          set -euo pipefail
+          ARGS=()
+          missing=()
+          # Every configured secret becomes both a build-time and a runtime variable.
+          for name in NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY SUPABASE_SERVICE_ROLE_KEY NEXT_PUBLIC_SITE_URL ADMIN_EMAILS CRON_SECRET RESEND_API_KEY EMAIL_FROM ORDER_ALERT_EMAIL WHATSAPP_ACCESS_TOKEN WHATSAPP_PHONE_NUMBER_ID WHATSAPP_VERIFY_TOKEN WHATSAPP_APP_SECRET WHATSAPP_ORDER_TEMPLATE WHATSAPP_STATUS_TEMPLATE WHATSAPP_OWNER_ALERT_NUMBER; do
+            var="S_$name"; val="${!var:-}"
+            if [ -n "$val" ]; then ARGS+=(-e "$name=$val" -b "$name=$val"); else missing+=("$name"); fi
+          done
+          if [ -z "${S_NEXT_PUBLIC_SITE_URL:-}" ]; then
+            ARGS+=(-e "NEXT_PUBLIC_SITE_URL=https://$VERCEL_PROJECT.vercel.app" -b "NEXT_PUBLIC_SITE_URL=https://$VERCEL_PROJECT.vercel.app")
+          fi
+          if [ "$TARGET" = "production" ]; then ARGS+=(--prod); fi
+          SCOPE_ARG=(); if [ -n "$VERCEL_SCOPE" ]; then SCOPE_ARG=(--scope "$VERCEL_SCOPE"); fi
+
+          URL=$(npx vercel deploy --yes --token "$VERCEL_TOKEN" "${SCOPE_ARG[@]}" "${ARGS[@]}")
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Deployed ($TARGET)"
+            echo
+            echo "$URL"
+            echo
+            if [ ${#missing[@]} -gt 0 ]; then
+              echo "Secrets not set (skipped): ${missing[*]}"
+              echo
+              echo "Without the Supabase secrets the storefront shows an empty menu and the admin shows a configuration notice."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke test
+        run: |
+          URL="${{ steps.deploy.outputs.url }}"
+          for path in / /menu /api/health /manifest.webmanifest; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$path")
+            echo "$path → $code"
+            case "$code" in 200|401) ;; *) echo "::error::$path returned $code"; exit 1;; esac
+          done
