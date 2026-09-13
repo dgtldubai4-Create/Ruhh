@@ -77,6 +77,11 @@ through the server with the service-role key.
 
 ## 2. Deploy to Vercel
 
+There is also a GitHub Actions workflow, `.github/workflows/deploy.yml`, that
+deploys on every push to `main` or on demand. It needs a `VERCEL_TOKEN`
+repository secret and reads the app variables from secrets of the same names;
+see `docs/DEPLOY_CHECKLIST.md` section 2A.
+
 1. Push this repo to GitHub (already done if you are reading this there).
 2. <https://vercel.com/new> → import the repo. Framework is auto-detected.
 3. Add the environment variables from `.env.example`:

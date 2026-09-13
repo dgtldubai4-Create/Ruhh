@@ -16,6 +16,18 @@ Expect about an hour end to end.
 
 ## 2. Vercel (hosting)
 
+Two ways. **2A** lets Claude deploy for you from GitHub Actions; **2B** is the dashboard.
+
+### 2A. Deploy from GitHub Actions (Claude can run this)
+
+- [ ] Sign in at https://vercel.com (create the account if needed). Go to **Account Settings → Tokens**, create a token named `github-actions`, scope Full Account, copy it.
+- [ ] In GitHub: **Ruhh → Settings → Secrets and variables → Actions → New repository secret**. Add `VERCEL_TOKEN` with that value.
+- [ ] Add the Supabase values from step 1 as secrets too: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, plus `ADMIN_EMAILS` and `CRON_SECRET`.
+- [ ] Tell Claude "deploy", or open **Actions → Deploy to Vercel → Run workflow**. The run creates the Vercel project on first use, deploys, and prints the URL in its summary.
+- [ ] Add `NEXT_PUBLIC_SITE_URL` as a secret with the URL you got, and put that URL into Supabase's redirect list (step 1). Deploy once more.
+
+### 2B. Deploy from the Vercel dashboard
+
 - [ ] Sign in at https://vercel.com, **Add New → Project**, import `dgtldubai4-Create/Ruhh`.
 - [ ] Under *Environment Variables*, add:
   - `NEXT_PUBLIC_SUPABASE_URL` = Project URL
