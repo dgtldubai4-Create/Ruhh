@@ -131,7 +131,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
     return (
       <div className="m-slide-up rounded-[16px] border-[1.5px] border-sage-mid bg-sage/40 p-7 text-center">
         <Confetti />
-        <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-sage-deep text-white shadow-[0_12px_24px_-12px_rgba(61,107,61,0.8)]">
+        <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-sage-deep text-on-accent shadow-[0_12px_24px_-12px_rgba(61,107,61,0.8)]">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M5 12l5 5L20 7" className="check-draw" />
           </svg>
@@ -141,7 +141,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
           {settings.owner_name} has your order for {fmtDate(o.slot_date)}, {o.slot_label}. WhatsApp should have opened with the details ready to send. If it did not, tap the button below.
         </p>
         {o.payment_method === "bank_transfer" && settings.bank_details && (
-          <div className="mx-auto my-3 max-w-[380px] rounded-[10px] bg-white p-3 text-left text-[12px] leading-[1.6] text-ink">
+          <div className="mx-auto my-3 max-w-[380px] rounded-[10px] bg-surface p-3 text-left text-[12px] leading-[1.6] text-ink">
             <div className="label">Bank transfer</div>
             <div className="whitespace-pre-wrap">{settings.bank_details}</div>
           </div>
@@ -235,7 +235,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
           <button
             key={m}
             onClick={() => setMode(m)}
-            className={`rounded-[12px] border-[1.5px] bg-white p-3 text-center transition ${mode === m ? "border-rose-deep bg-rose/40" : "border-line"}`}
+            className={`rounded-[12px] border-[1.5px] bg-surface p-3 text-center transition ${mode === m ? "border-rose-deep bg-rose/40" : "border-line"}`}
           >
             <div className="text-[22px]">{icon}</div>
             <div className="text-[13px] font-bold">{label}</div>
@@ -297,7 +297,7 @@ export function Checkout({ settings, zones }: { settings: Settings; zones: Deliv
 
       <Toggle on={isGift} onChange={setIsGift} icon="🎁" title="This is a gift" sub="Add a handwritten card and we won't include prices" />
       {isGift && (
-        <div className="mb-3 rounded-[12px] border border-line bg-white p-3">
+        <div className="mb-3 rounded-[12px] border border-line bg-surface p-3">
           <Field label="Recipient's name">
             <input className="field" value={giftRecipient} onChange={(e) => setGiftRecipient(e.target.value)} />
           </Field>
@@ -361,7 +361,7 @@ function Toggle({ on, onChange, icon, title, sub }: { on: boolean; onChange: (v:
         onClick={() => onChange(!on)}
         className={`relative h-6 w-11 rounded-full transition ${on ? "bg-sage-deep" : "bg-line"}`}
       >
-        <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition ${on ? "left-[22px]" : "left-0.5"}`} />
+        <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-surface transition ${on ? "left-[22px]" : "left-0.5"}`} />
       </button>
     </div>
   );

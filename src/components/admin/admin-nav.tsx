@@ -25,7 +25,7 @@ export function AdminNav() {
           <Link
             key={l.href}
             href={l.href}
-            className={`flex shrink-0 items-center gap-2 rounded-[10px] px-3 py-2 text-[13px] transition ${active ? "bg-rose font-bold text-rose-deep" : "text-muted hover:bg-white"}`}
+            className={`flex shrink-0 items-center gap-2 rounded-[10px] px-3 py-2 text-[13px] transition ${active ? "bg-rose font-bold text-rose-deep" : "text-muted hover:bg-surface"}`}
           >
             <span aria-hidden>{l.icon}</span> {l.label}
           </Link>

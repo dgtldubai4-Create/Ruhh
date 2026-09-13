@@ -77,7 +77,7 @@ export function ItemPicker({
       aria-label={`Choose options for ${m.name}`}
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="m-slide-up relative max-h-[92vh] w-full max-w-[420px] overflow-y-auto rounded-[16px] bg-white p-6 pt-5">
+      <div className="m-slide-up relative max-h-[92vh] w-full max-w-[420px] overflow-y-auto rounded-[16px] bg-surface p-6 pt-5">
         <div className="absolute inset-x-0 top-0 h-1.5 rounded-t-[16px] bg-rose-deep" />
         <button onClick={onClose} aria-label="Close" className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full text-[20px] text-muted hover:bg-cream2">
           ×

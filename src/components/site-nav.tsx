@@ -16,11 +16,11 @@ const TABS = [
 export function CartPill() {
   const { count, hydrated } = useCart();
   return (
-    <Link href="/order" className="press flex shrink-0 items-center gap-1.5 rounded-full bg-rose-deep px-3.5 py-1.5 text-[12px] text-white" aria-label="View cart">
+    <Link href="/order" className="press flex shrink-0 items-center gap-1.5 rounded-full bg-rose-deep px-3.5 py-1.5 text-[12px] text-on-accent" aria-label="View cart">
       Cart
       <span
         key={hydrated ? count : -1}
-        className={`flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-white px-1 text-[10px] font-bold text-rose-deep ${hydrated && count > 0 ? "m-bump" : ""}`}
+        className={`flex h-[17px] min-w-[17px] items-center justify-center rounded-full bg-on-accent px-1 text-[10px] font-bold text-rose-deep ${hydrated && count > 0 ? "m-bump" : ""}`}
       >
         {hydrated ? count : 0}
       </span>

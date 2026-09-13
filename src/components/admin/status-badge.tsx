@@ -6,7 +6,7 @@ const COLORS: Record<OrderStatus, string> = {
   baking: "bg-rose text-rose-deep",
   out_for_delivery: "bg-sage text-sage-deep",
   ready_for_pickup: "bg-sage text-sage-deep",
-  delivered: "bg-sage-deep text-white",
+  delivered: "bg-sage-deep text-on-accent",
   cancelled: "bg-danger/15 text-danger",
 };
 

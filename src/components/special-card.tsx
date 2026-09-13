@@ -33,7 +33,7 @@ export function SpecialCard({ special: s, leadTimeHours }: { special: Special; l
   }
 
   return (
-    <div className="lift mb-3.5 flex items-center gap-4 rounded-[16px] border border-line bg-white p-4">
+    <div className="lift mb-3.5 flex items-center gap-4 rounded-[16px] border border-line bg-surface p-4">
       <div className={`relative flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[12px] text-[30px] ${a.bg}`}>
         {s.image_url ? <Photo src={s.image_url} alt={s.name} fill sizes="72px" className="object-cover" /> : s.emoji}
       </div>

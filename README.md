@@ -179,6 +179,12 @@ later without schema changes:
 Either would be wired in as a redirect from the checkout after the order is
 saved, with a webhook marking `payment_status = 'paid'`.
 
+## Dark mode
+
+The site follows the visitor's system preference and offers an Auto / Light /
+Dark switch in the footer. Everything is driven by colour tokens, so both
+themes stay in sync automatically; the logo swaps to a light-on-dark variant.
+
 ## Local development
 
 ```bash
@@ -187,6 +193,9 @@ npm install
 npm run dev                  # http://localhost:3000
 npm run check                # lint + typecheck + unit tests
 ```
+
+Fonts are loaded with `next/font` at build time, so the build needs network
+access to Google Fonts.
 
 Without Supabase variables the storefront renders with an empty menu and the
 admin shows a configuration notice, which is enough to work on the UI.

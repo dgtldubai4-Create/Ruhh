@@ -114,7 +114,7 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
                    
                   />
                   {itemHasOptions(m) && (
-                    <span className="absolute right-1.5 top-1.5 rounded-full bg-white/85 px-1.5 py-0.5 text-[9px] font-bold text-rose-deep">options</span>
+                    <span className="absolute right-1.5 top-1.5 rounded-full bg-surface/85 px-1.5 py-0.5 text-[9px] font-bold text-rose-deep">options</span>
                   )}
                 </div>
                 <div className="flex flex-1 flex-col p-2.5 px-3">
@@ -132,7 +132,7 @@ export function MenuBrowser({ items, categories, settings }: { items: MenuItem[]
                         e.stopPropagation();
                         choose(m);
                       }}
-                      className={`press flex h-7 w-7 items-center justify-center rounded-full text-[16px] leading-none text-white transition ${flash === m.id ? "m-pop bg-sage text-sage-deep" : "bg-rose-deep"}`}
+                      className={`press flex h-7 w-7 items-center justify-center rounded-full text-[16px] leading-none text-on-accent transition ${flash === m.id ? "m-pop bg-sage text-sage-deep" : "bg-rose-deep"}`}
                     >
                       {flash === m.id ? "✓" : "+"}
                     </button>

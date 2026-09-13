@@ -20,13 +20,67 @@
   --color-line: rgba(155, 75, 107, 0.13);
   --color-danger: #b23a48;
   --color-rose-clay: #b8707c;
-  --font-serif: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  --color-surface: #ffffff;
+  --color-on-accent: #ffffff;
+  --font-serif: var(--font-dm-sans), "DM Sans", "Helvetica Neue", Arial, sans-serif;
   --radius-card: 16px;
   --radius-sm: 10px;
 }
 
 html {
-  color-scheme: light;
+  color-scheme: light dark;
+}
+
+/* ---------- dark theme ----------
+   Tokens only: every utility reads these variables, so the whole app
+   flips. System preference by default; data-theme overrides it. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-cream: #1c1315;
+    --color-cream2: #261a1d;
+    --color-surface: #2d2024;
+    --color-ink: #f4ece7;
+    --color-muted: #c6a8b0;
+    --color-line: rgba(247, 214, 224, 0.14);
+    --color-rose: #45293a;
+    --color-rose-mid: #d4829e;
+    --color-rose-deep: #d98aa9;
+    --color-rose-clay: #d68e9c;
+    --color-lav: #372b4a;
+    --color-lav-mid: #a98bd0;
+    --color-lav-deep: #c9b3ea;
+    --color-sage: #263826;
+    --color-sage-mid: #8cbf8c;
+    --color-sage-deep: #a6d2a6;
+    --color-peach: #46331f;
+    --color-peach-mid: #e8a870;
+    --color-peach-deep: #f1c69a;
+    --color-danger: #f08a96;
+    --color-on-accent: #1c1315;
+  }
+}
+:root[data-theme="dark"] {
+  --color-cream: #1c1315;
+  --color-cream2: #261a1d;
+  --color-surface: #2d2024;
+  --color-ink: #f4ece7;
+  --color-muted: #c6a8b0;
+  --color-line: rgba(247, 214, 224, 0.14);
+  --color-rose: #45293a;
+  --color-rose-mid: #d4829e;
+  --color-rose-deep: #d98aa9;
+  --color-rose-clay: #d68e9c;
+  --color-lav: #372b4a;
+  --color-lav-mid: #a98bd0;
+  --color-lav-deep: #c9b3ea;
+  --color-sage: #263826;
+  --color-sage-mid: #8cbf8c;
+  --color-sage-deep: #a6d2a6;
+  --color-peach: #46331f;
+  --color-peach-mid: #e8a870;
+  --color-peach-deep: #f1c69a;
+  --color-danger: #f08a96;
+  --color-on-accent: #1c1315;
 }
 
 body {
@@ -38,16 +92,16 @@ body {
 
 @layer components {
   .btn-p {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-rose-deep px-5 py-2.5 text-[13px] text-white transition hover:opacity-90 hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-rose-deep px-5 py-2.5 text-[13px] text-on-accent transition hover:opacity-90 hover:-translate-y-px disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0;
   }
   .btn-o {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-rose-deep bg-white px-5 py-2 text-[13px] text-rose-deep transition hover:bg-rose disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-rose-deep bg-surface px-5 py-2 text-[13px] text-rose-deep transition hover:bg-rose disabled:opacity-50;
   }
   .btn-wa {
     @apply flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#25d366] px-4 py-3 text-[13px] font-bold text-white transition hover:brightness-95 disabled:opacity-60;
   }
   .card {
-    @apply rounded-[16px] border border-line bg-white;
+    @apply rounded-[16px] border border-line bg-surface;
   }
   .sec-head {
     @apply mb-3.5 flex items-center gap-3 text-[19px] leading-tight text-ink;
@@ -60,7 +114,7 @@ body {
     background: var(--color-line);
   }
   .field {
-    @apply w-full rounded-[10px] border-[1.5px] border-line bg-white px-3 py-2.5 text-[13px] text-ink outline-none transition placeholder:text-muted/60 focus:border-rose-mid;
+    @apply w-full rounded-[10px] border-[1.5px] border-line bg-surface px-3 py-2.5 text-[13px] text-ink outline-none transition placeholder:text-muted/60 focus:border-rose-mid;
   }
   .field-err {
     @apply border-danger;
@@ -72,16 +126,16 @@ body {
     @apply inline-block rounded-full px-2 py-0.5 text-[10px] font-bold;
   }
   .chip {
-    @apply rounded-full border-[1.5px] border-line bg-white px-3.5 py-1.5 text-[12px] text-ink transition hover:border-rose-mid;
+    @apply rounded-full border-[1.5px] border-line bg-surface px-3.5 py-1.5 text-[12px] text-ink transition hover:border-rose-mid;
   }
   .chip-sel {
     @apply border-rose-deep bg-rose text-rose-deep font-bold;
   }
   .qbtn {
-    @apply flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white text-[14px] leading-none text-rose-deep hover:bg-rose disabled:opacity-40;
+    @apply flex h-7 w-7 items-center justify-center rounded-full border border-line bg-surface text-[14px] leading-none text-rose-deep hover:bg-rose disabled:opacity-40;
   }
   .admin-input {
-    @apply w-full rounded-[8px] border border-line bg-white px-2.5 py-2 text-[13px] outline-none focus:border-rose-mid;
+    @apply w-full rounded-[8px] border border-line bg-surface px-2.5 py-2 text-[13px] outline-none focus:border-rose-mid;
   }
 }
 
@@ -92,7 +146,7 @@ body {
 
 /* ---------- display type ---------- */
 @theme {
-  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
 }
 h1,
 h2,
@@ -239,7 +293,7 @@ h3,
   animation-delay: 240ms;
 }
 .skeleton {
-  background: linear-gradient(90deg, var(--color-cream2) 25%, #fff 50%, var(--color-cream2) 75%);
+  background: linear-gradient(90deg, var(--color-cream2) 25%, var(--color-surface) 50%, var(--color-cream2) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
   border-radius: 10px;
@@ -304,6 +358,7 @@ h3,
   }
   body {
     background: #fff;
+    color: #2c1a1a;
   }
 }
 
@@ -402,4 +457,29 @@ h3,
     opacity: 1;
     transform: none;
   }
+}
+
+/* ---------- theme-conditional assets (logo variants) ---------- */
+.only-dark {
+  display: none;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .only-light {
+    display: none;
+  }
+  :root:not([data-theme="light"]) .only-dark {
+    display: block;
+  }
+}
+:root[data-theme="dark"] .only-light {
+  display: none;
+}
+:root[data-theme="dark"] .only-dark {
+  display: block;
+}
+:root[data-theme="light"] .only-light {
+  display: block;
+}
+:root[data-theme="light"] .only-dark {
+  display: none;
 }

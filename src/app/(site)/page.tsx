@@ -300,7 +300,7 @@ export default async function HomePage() {
                 first.
               </div>
             </div>
-            <span className="flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12px] font-bold text-rose-deep">
+            <span className="flex items-center gap-1.5 rounded-full bg-surface px-3 py-1.5 text-[12px] font-bold text-rose-deep">
               <InstagramIcon /> @{ig}
             </span>
           </a>
